@@ -4,7 +4,8 @@
 //lists.forEach((item)=>{athletes.push(item.getAttribute('href'))})
 
 const teams = {
-    zurich: ['/athletes/29041600', '/athletes/23067415', '/athletes/6228065', '/athletes/15282580', '/athletes/26022333', '/athletes/5257885', '/athletes/20385538', '/athletes/23837170'],
+    zurich: ['/athletes/29041600', '/athletes/23067415', '/athletes/6228065', '/athletes/15282580', '/athletes/26022333',
+        '/athletes/5257885', '/athletes/20385538', '/athletes/23837170', '/athletes/29177863'],
     manila: ['/athletes/18519747', '/athletes/16500041', '/athletes/42704472', '/athletes/41904167'],
     edinburgh: ['/athletes/16031782', '/athletes/31565097', '/athletes/42912286', '/athletes/42949260', '/athletes/42945930']
 };
@@ -27,15 +28,15 @@ const initialValues = {
     },
     zurich: {
         distance: {
-            total: 27280,
+            total: 30950,
             avgByAthlete: 0
         },
         elevation: {
-            total: 531,
+            total: 562,
             avgByAthlete: 0
         },
         time: {
-            total: 9417,
+            total: 10576,
             avgByAthlete: 0
         },
     },
