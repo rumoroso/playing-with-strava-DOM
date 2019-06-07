@@ -127,7 +127,6 @@ function setCellData(cell, data) {
     cell.querySelector('.athlete-name').style.textTransform = 'capitalize';
     cell.querySelector('.dimension').textContent = data.value;
     cell.querySelector('.dimension').style.marginTop = '3px';
-    cell.querySelector('.dimension').style.fontWeight = 'bold';
 }
 
 function getRanking() {
