@@ -69,14 +69,6 @@ dimensions.forEach((dimension, dimensionIndex) => {
     const dimensionHeader = leadersRankingHeaderRow.querySelector('th:nth-child(' + (dimensionIndex + 2) + ')');
     dimensionHeader.textContent = dimension;
 
-    if (dimension === 'distance') {
-        dimensionHeader.textContent += ' (km)';
-    } else if (dimension === 'time') {
-        dimensionHeader.textContent += ' (hh:mm:ss)';
-    } else if (dimension === 'elevation') {
-        dimensionHeader.textContent += ' (m)';
-    }
-
     const rankingByDimension = getRankingByDimension(ranking, dimension);
     const orderedRanking = [];
     for (const team in rankingByDimension) {
@@ -95,11 +87,13 @@ dimensions.forEach((dimension, dimensionIndex) => {
         let value = item.value;
 
         if (dimension === 'distance') {
-            value = (value / 1000) + ' (' + (value / 1609) + 'mi)';
+            const mi = value / 1609;
+            value = (value / 1000) + 'km - ' + mi.toFixed(2) + 'mi';
         } else if (dimension === 'time') {
             value = secondsTimeConvert(value);
         } else if (dimension === 'elevation') {
-            value += ' (' + (value / 0.3048) + 'ft)';
+            const ft = value / 0.3048;
+            value += 'm - ' + ft.toFixed(2) + 'ft';
         }
 
         setCellData(cell, {team, value});
