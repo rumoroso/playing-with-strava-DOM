@@ -1,8 +1,3 @@
-//const lists = document.querySelectorAll('.list-athletes li .text-headline a')
-
-//const athletes = [];
-//lists.forEach((item)=>{athletes.push(item.getAttribute('href'))})
-
 const teams = {
     zurich: ['/athletes/29041600', '/athletes/23067415', '/athletes/6228065', '/athletes/15282580', '/athletes/26022333',
         '/athletes/5257885', '/athletes/20385538', '/athletes/23837170', '/athletes/29177863'],
@@ -10,7 +5,28 @@ const teams = {
         '/athletes/39378771', '/athletes/42168384', '/athletes/43058513', '/athletes/41572080'],
     edinburgh: ['/athletes/16031782', '/athletes/31565097', '/athletes/42912286', '/athletes/42949260', '/athletes/42945930']
 };
-const dimensions = ['distance', 'time', 'elevation', 'pace'];
+
+function getTeamsData() {
+    const athletes = {};
+    const listsOfAthletes = document.querySelectorAll('.list-athletes li .text-headline a');
+    listsOfAthletes.forEach((item) => {
+            const href = item.getAttribute('href');
+            athletes[href] =  item.textContent;
+        }
+    );
+
+    for (const team in teams) {
+        const athletesInTeamLength = teams[team].length;
+
+        for (let i = 0; i < athletesInTeamLength; i++) {
+            teams[team][i] = {'url': teams[team][i], 'name': athletes[teams[team][i]]};
+        }
+    }
+    console.log(JSON.stringify(teams));
+}
+
+
+const dimensions = ['distance', 'elevation', 'time', 'pace'];
 
 const initialValues = {
     manila: {
@@ -74,6 +90,7 @@ while (leadersRankingtbody.children.length) {
 const leadersRankingTableByAthlete = leadersRankingTableByTeam.cloneNode(true);
 tableParent.appendChild(leadersRankingTableByAthlete);
 
+tableParent.insertBefore(generateTableDataByTeams(), leadersRankingTableByTeam);
 tableParent.insertBefore(createElement('h2', {'style': 'text-align: center'}, 'By team (office location)'), leadersRankingTableByTeam);
 tableParent.insertBefore(createElement('h2', {'style': 'text-align: center'}, 'By athlete'), leadersRankingTableByAthlete);
 
@@ -84,6 +101,32 @@ console.log(JSON.stringify(ranking));
 
 generateResults();
 generateResults(true);
+
+
+function generateTableDataByTeams() {
+    const rows = [];
+    for (const team in teams) {
+        const teamName = createElement('td', {}, team);
+        const athletesInTeamLength = teams[team].length;
+        teamName.style.fontWeight = 'bold';
+        teamName.style.fontVariant = 'small-caps';
+        teamName.style.textTransform = 'capitalize';
+
+
+        const athletesCell = createElement('td', {}, athletesInTeamLength);
+
+        let list = '';
+
+        for (let i = 0; i < athletesInTeamLength; i++) {
+            const name = teams[team][i].name;
+            list += name ? name + ', ' : '';
+        }
+        const athletesNameCell = createElement('td', {}, list);
+
+        rows.push(createElement('tr', {}, [teamName, athletesCell, athletesNameCell]));
+    }
+    return createElement('table', {}, rows)
+}
 
 function generateResults(byAthelete = false) {
     const table = !byAthelete ? leadersRankingTableByTeam : leadersRankingTableByAthlete;
@@ -123,7 +166,7 @@ function generateResults(byAthelete = false) {
             } else if (dimension === 'elevation') {
                 const elevation = value.toFixed(2);
                 const ft = value / 0.3048;
-                value =elevation + 'm - ' + ft.toFixed(2) + 'ft';
+                value = elevation + 'm - ' + ft.toFixed(2) + 'ft';
             } else if (dimension === 'pace') {
                 const byMi = secondsTimeConvert(value * 1609, true);
                 value = secondsTimeConvert(value * 1000, true) + ' /km - ' + byMi + ' /mi';
@@ -206,14 +249,6 @@ function getRanking() {
 
     return ranking;
 
-    function getTeamForUser(athlete) {
-        for (const team in teams) {
-            if (teams[team].indexOf(athlete) > -1) {
-                return team;
-            }
-        }
-    }
-
     function addToTeam(team, data) {
         if (!ranking[team]) {
             ranking[team] = {
@@ -227,6 +262,17 @@ function getRanking() {
         ranking[team].elevation.total += data.elevation;
         ranking[team].time.total += data.time;
 
+    }
+}
+
+function getTeamForUser(athlete) {
+    for (const team in teams) {
+        const athletes = teams[team].map((athlete) => {
+            return athlete.url || athlete;
+        });
+        if (athletes.indexOf(athlete) > -1) {
+            return team;
+        }
     }
 }
 
@@ -259,9 +305,8 @@ function timeConverterToSeconds(time) {
 
 function createAchievementCell(achievement) {
     const achievementDiv = createElement('div', {'class': achievement});
-    const cell = createElement('td', {}, achievementDiv);
 
-    return cell;
+    return createElement('td', {}, achievementDiv);
 }
 
 function createCellResult(team, result) {
@@ -273,9 +318,7 @@ function createCellResult(team, result) {
     const dimension = createElement('span', {'class': 'dimension'}, result);
     dimension.style.marginTop = '3px';
 
-    const cell = createElement('td', {}, [teamName, dimension]);
-
-    return cell;
+    return createElement('td', {}, [teamName, dimension]);
 }
 
 function createElement(tagName, attributes = {}, childNodes = [], events = []) {
