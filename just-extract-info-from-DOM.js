@@ -10,7 +10,7 @@ const teams = {
         '/athletes/39378771', '/athletes/42168384', '/athletes/43058513', '/athletes/41572080'],
     edinburgh: ['/athletes/16031782', '/athletes/31565097', '/athletes/42912286', '/athletes/42949260', '/athletes/42945930']
 };
-const dimensions = ['distance', 'time', 'elevation'];
+const dimensions = ['distance', 'time', 'elevation', 'pace'];
 
 const initialValues = {
     manila: {
@@ -25,7 +25,7 @@ const initialValues = {
         time: {
             total: 26288,
             avgByAthlete: 0
-        },
+        }
     },
     zurich: {
         distance: {
@@ -39,7 +39,7 @@ const initialValues = {
         time: {
             total: 10576,
             avgByAthlete: 0
-        },
+        }
     },
     edinburgh: {
         distance: {
@@ -53,81 +53,114 @@ const initialValues = {
         time: {
             total: 10047,
             avgByAthlete: 0
-        },
+        }
     }
 };
 
 const athletesRanking = document.querySelectorAll('.leaderboard table tbody tr');
-const leadersRankingHeaderRow = document.querySelector('.leaders table thead tr');
-const leadersRankingRows = document.querySelectorAll('.leaders table tbody tr');
+const leadersRankingTableByTeam = document.querySelector('.leaders table');
+const tableParent = leadersRankingTableByTeam.parentNode;
+const leadersRankingHeaderRow = leadersRankingTableByTeam.querySelector('thead tr');
+while (leadersRankingHeaderRow.children.length) {
+    leadersRankingHeaderRow.children[0].remove()
+}
+leadersRankingHeaderRow.appendChild(createElement('th'));
 
+const leadersRankingtbody = leadersRankingTableByTeam.querySelector('tbody');
+while (leadersRankingtbody.children.length) {
+    leadersRankingtbody.children[0].remove()
+}
+
+const leadersRankingTableByAthlete = leadersRankingTableByTeam.cloneNode(true);
+tableParent.appendChild(leadersRankingTableByAthlete);
+
+tableParent.insertBefore(createElement('h2', {'style': 'text-align: center'}, 'By team (office location)'), leadersRankingTableByTeam);
+tableParent.insertBefore(createElement('h2', {'style': 'text-align: center'}, 'By athlete'), leadersRankingTableByAthlete);
 
 const resultsByAthlete = {};
 const ranking = getRanking();
 
+console.log(JSON.stringify(ranking));
 
-dimensions.forEach((dimension, dimensionIndex) => {
-    const dimensionHeader = leadersRankingHeaderRow.querySelector('th:nth-child(' + (dimensionIndex + 2) + ')');
-    dimensionHeader.textContent = dimension;
+generateResults();
+generateResults(true);
 
-    const rankingByDimension = getRankingByDimension(ranking, dimension);
-    const orderedRanking = [];
-    for (const team in rankingByDimension) {
-        const value = rankingByDimension[team];
-        orderedRanking.push({team, value});
-    }
+function generateResults(byAthelete = false) {
+    const table = !byAthelete ? leadersRankingTableByTeam : leadersRankingTableByAthlete;
 
-    orderedRanking.sort(compare);
-    orderedRanking.forEach((item, index) => {
-        const row = leadersRankingRows[index];
-        const achievement = row.querySelector('td:nth-child(1) .achievement');
-        achievement.setAttribute('class', 'achievement kom-' + (index + 1) + (index ? '' : 'a'));
+    dimensions.forEach((dimension, dimensionIndex) => {
+        table.querySelector('thead tr').appendChild(createElement('th', {}, dimension));
 
-        const cell = row.querySelector('td:nth-child(' + (dimensionIndex + 2) + ')');
-        const team = item.team;
-        let value = item.value;
-
-        if (dimension === 'distance') {
-            const mi = value / 1609;
-            value = (value / 1000) + 'km - ' + mi.toFixed(2) + 'mi';
-        } else if (dimension === 'time') {
-            value = secondsTimeConvert(value);
-        } else if (dimension === 'elevation') {
-            const ft = value / 0.3048;
-            value += 'm - ' + ft.toFixed(2) + 'ft';
+        const rankingByDimensionAndTeam = getRankingByDimension(ranking, dimension, byAthelete);
+        const orderedRanking = [];
+        for (const team in rankingByDimensionAndTeam) {
+            const value = rankingByDimensionAndTeam[team];
+            orderedRanking.push({team, value});
         }
 
-        setCellData(cell, {team, value});
+        if (dimension != 'pace') {
+            orderedRanking.sort(sortDesc);
+        } else {
+            orderedRanking.sort(sortAsc);
+        }
+
+        orderedRanking.forEach((item, index) => {
+            let row = table.querySelector('tbody').querySelectorAll('tr')[index];
+
+            if (!row) {
+                row = createElement('tr', {}, createAchievementCell('achievement kom-' + (index + 1) + (index ? '' : 'a')));
+                table.querySelector('tbody').appendChild(row);
+            }
+            const team = item.team;
+            let value = item.value;
+
+            if (dimension === 'distance') {
+                const distance = value / 1000;
+                const mi = value / 1609;
+                value = distance.toFixed(2) + 'km - ' + mi.toFixed(2) + 'mi';
+            } else if (dimension === 'time') {
+                value = secondsTimeConvert(value);
+            } else if (dimension === 'elevation') {
+                const elevation = value.toFixed(2);
+                const ft = value / 0.3048;
+                value =elevation + 'm - ' + ft.toFixed(2) + 'ft';
+            } else if (dimension === 'pace') {
+                const byMi = secondsTimeConvert(value * 1609, true);
+                value = secondsTimeConvert(value * 1000, true) + ' /km - ' + byMi + ' /mi';
+            }
+
+            row.appendChild(createCellResult(team, value));
+        });
     });
-});
 
-function compare(a, b) {
-    if (a.value > b.value) {
-        return -1;
-    } else if (a.value < b.value) {
-        return 1;
-    }
-    return 0;
-}
-
-function getRankingByDimension(ranking, dimension, byAthlete) {
-    const rankingByDimension = {};
-    for (const team in ranking) {
-        let value = !byAthlete ? ranking[team][dimension].total : ranking[team][dimension].avgByAthlete;
-        rankingByDimension[team] = value;
+    function sortDesc(a, b) {
+        if (a.value > b.value) {
+            return -1;
+        } else if (a.value < b.value) {
+            return 1;
+        }
+        return 0;
     }
 
-    return rankingByDimension;
-}
+    function sortAsc(a, b) {
+        if (a.value > b.value) {
+            return 1;
+        } else if (a.value < b.value) {
+            return -1;
+        }
+        return 0;
+    }
 
-function setCellData(cell, data) {
-    cell.querySelector('.avatar').style.display = 'none';
-    cell.querySelector('.athlete-name').textContent = data.team;
-    cell.querySelector('.athlete-name').style.fontWeight = 'bold';
-    cell.querySelector('.athlete-name').style.fontVariant = 'small-caps';
-    cell.querySelector('.athlete-name').style.textTransform = 'capitalize';
-    cell.querySelector('.dimension').textContent = data.value;
-    cell.querySelector('.dimension').style.marginTop = '3px';
+    function getRankingByDimension(ranking, dimension, byAthlete) {
+        const rankingByDimension = {};
+        for (const team in ranking) {
+            let value = !byAthlete ? ranking[team][dimension].total : ranking[team][dimension].avgByAthlete;
+            rankingByDimension[team] = value;
+        }
+
+
+        return rankingByDimension;
+    }
 }
 
 function getRanking() {
@@ -166,13 +199,9 @@ function getRanking() {
         ranking[team].elevation.total = ranking[team].elevation.total;
         ranking[team].time.avgByAthlete = ranking[team].time.total / teamLength;
         ranking[team].time.total = ranking[team].time.total;
-
-//        ranking[team].distance.avgByAthlete = (ranking[team].distance.total / teamLength) / 1000;
-//        ranking[team].distance.total = ranking[team].distance.total / 1000;
-//        ranking[team].elevation.avgByAthlete = ranking[team].elevation.total / teamLength;
-//        ranking[team].elevation.total = ranking[team].elevation.total;
-//        ranking[team].time.avgByAthlete = secondsTimeConvert(ranking[team].time.total / teamLength);
-//        ranking[team].time.total = secondsTimeConvert(ranking[team].time.total);
+        ranking[team].pace = {};
+        ranking[team].pace.avgByAthlete = ranking[team].time.avgByAthlete / ranking[team].distance.avgByAthlete;
+        ranking[team].pace.total = ranking[team].time.total / ranking[team].distance.total;
     }
 
     return ranking;
@@ -201,7 +230,7 @@ function getRanking() {
     }
 }
 
-function secondsTimeConvert(secondsTotal) {
+function secondsTimeConvert(secondsTotal, toMinutes = false) {
     const hours = secondsTotal / 3600;
     const roundedHours = Math.floor(hours);
     const minutes = (hours - roundedHours) * 60;
@@ -209,7 +238,11 @@ function secondsTimeConvert(secondsTotal) {
     const seconds = (minutes - roundedMinutes) * 60;
     const roundedSeconds = Math.round(seconds);
 
-    return roundedHours + ':' + (roundedMinutes < 10 ? '0' + roundedMinutes : roundedMinutes) + ':' + (roundedSeconds < 10 ? '0' + roundedSeconds : roundedSeconds);
+    if (!toMinutes) {
+        return roundedHours + ':' + (roundedMinutes < 10 ? '0' + roundedMinutes : roundedMinutes) + ':' + (roundedSeconds < 10 ? '0' + roundedSeconds : roundedSeconds);
+    } else {
+        return roundedMinutes + ':' + (roundedSeconds < 10 ? '0' + roundedSeconds : roundedSeconds);
+    }
 }
 
 function timeConverterToSeconds(time) {
@@ -223,3 +256,56 @@ function timeConverterToSeconds(time) {
 
     return timeInSeconds;
 }
+
+function createAchievementCell(achievement) {
+    const achievementDiv = createElement('div', {'class': achievement});
+    const cell = createElement('td', {}, achievementDiv);
+
+    return cell;
+}
+
+function createCellResult(team, result) {
+    const teamName = createElement('span', {'class': 'athlete-name'}, team);
+    teamName.style.fontWeight = 'bold';
+    teamName.style.fontVariant = 'small-caps';
+    teamName.style.textTransform = 'capitalize';
+
+    const dimension = createElement('span', {'class': 'dimension'}, result);
+    dimension.style.marginTop = '3px';
+
+    const cell = createElement('td', {}, [teamName, dimension]);
+
+    return cell;
+}
+
+function createElement(tagName, attributes = {}, childNodes = [], events = []) {
+    let newElement = document.createElement(tagName);
+
+    for (let propertyName in attributes) {
+        newElement.setAttribute(propertyName, attributes[propertyName]);
+    }
+
+    childNodes = Array.isArray(childNodes) ? childNodes : [childNodes];
+    for (let i = 0; i < childNodes.length; i++) {
+        if (typeof childNodes[i] === 'string' || typeof childNodes[i] === 'number') {
+            let textNode = createTextNode(childNodes[i]);
+            newElement.appendChild(textNode);
+        } else {
+            newElement.appendChild(childNodes[i]);
+        }
+    }
+
+    events = Array.isArray(events) ? events : [events];
+    for (let i = 0; i < events.length; i++) {
+        const {name, callback} = events[i];
+        newElement.addEventListener(name, callback);
+    }
+
+    return newElement
+}
+
+function createTextNode(text) {
+    return document.createTextNode(text);
+}
+
+
