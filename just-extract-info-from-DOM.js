@@ -27,48 +27,71 @@ function getTeamsData() {
 
 const dimensions = ['distance', 'elevation', 'time', 'pace'];
 
+const initial = {
+    first: {
+        manila: {
+            distance: {
+                total: 61080,
+                avgByAthlete: 0
+            },
+            elevation: {
+                total: 828,
+                avgByAthlete: 0
+            },
+            time: {
+                total: 26288,
+                avgByAthlete: 0
+            }
+        },
+        zurich: {
+            distance: {
+                total: 30950,
+                avgByAthlete: 0
+            },
+            elevation: {
+                total: 562,
+                avgByAthlete: 0
+            },
+            time: {
+                total: 10576,
+                avgByAthlete: 0
+            }
+        },
+        edinburgh: {
+            distance: {
+                total: 23200,
+                avgByAthlete: 0
+            },
+            elevation: {
+                total: 167,
+                avgByAthlete: 0
+            },
+            time: {
+                total: 10047,
+                avgByAthlete: 0
+            }
+        }
+    }
+};
+
 const initialValues = {
-    manila: {
-        distance: {
-            total: 61080,
-            avgByAthlete: 0
-        },
-        elevation: {
-            total: 828,
-            avgByAthlete: 0
-        },
-        time: {
-            total: 26288,
-            avgByAthlete: 0
-        }
+    "manila": {
+        "distance": {"total": 212580, "avgByAthlete": 23620},
+        "elevation": {"total": 2419, "avgByAthlete": 268.77777777777777},
+        "time": {"total": 96155.5, "avgByAthlete": 10683.944444444445},
+        "pace": {"avgByAthlete": 0.45232618308401545, "total": 0.45232618308401545}
     },
-    zurich: {
-        distance: {
-            total: 30950,
-            avgByAthlete: 0
-        },
-        elevation: {
-            total: 562,
-            avgByAthlete: 0
-        },
-        time: {
-            total: 10576,
-            avgByAthlete: 0
-        }
+    "zurich": {
+        "distance": {"total": 107750, "avgByAthlete": 11972.222222222223},
+        "elevation": {"total": 1730, "avgByAthlete": 192.22222222222223},
+        "time": {"total": 36381.299999999996, "avgByAthlete": 4042.3666666666663},
+        "pace": {"avgByAthlete": 0.33764547563805103, "total": 0.33764547563805103}
     },
-    edinburgh: {
-        distance: {
-            total: 23200,
-            avgByAthlete: 0
-        },
-        elevation: {
-            total: 167,
-            avgByAthlete: 0
-        },
-        time: {
-            total: 10047,
-            avgByAthlete: 0
-        }
+    "edinburgh": {
+        "distance": {"total": 127000, "avgByAthlete": 25400},
+        "elevation": {"total": 1243, "avgByAthlete": 248.6},
+        "time": {"total": 44050.5, "avgByAthlete": 8810.1},
+        "pace": {"avgByAthlete": 0.34685433070866145, "total": 0.3468543307086614}
     }
 };
 
@@ -102,6 +125,7 @@ function groupAndAnaliseData(teams) {
     const resultsByAthlete = {};
     const ranking = getRanking();
 
+    console.log(JSON.stringify(ranking));
     generateResults();
     generateResults(true);
 
@@ -237,7 +261,6 @@ function groupAndAnaliseData(teams) {
         });
 
         for (const team in ranking) {
-            console.log(teams)
             const teamLength = teams[team].length;
             ranking[team].distance.avgByAthlete = (ranking[team].distance.total / teamLength);
             ranking[team].distance.total = ranking[team].distance.total;
