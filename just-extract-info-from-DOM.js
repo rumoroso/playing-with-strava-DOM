@@ -3,7 +3,8 @@ const teams = {
         '/athletes/5257885', '/athletes/20385538', '/athletes/23837170', '/athletes/29177863'],
     manila: ['/athletes/18519747', '/athletes/16500041', '/athletes/42704472', '/athletes/41904167', '/athletes/43010190',
         '/athletes/39378771', '/athletes/42168384', '/athletes/43058513', '/athletes/41572080'],
-    edinburgh: ['/athletes/16031782', '/athletes/31565097', '/athletes/42912286', '/athletes/42949260', '/athletes/42945930']
+    edinburgh: ['/athletes/16031782', '/athletes/31565097', '/athletes/42912286', '/athletes/42949260', '/athletes/42945930'],
+    lugano: ['/athletes/14570654']
 };
 getTeamsData();
 
@@ -70,6 +71,20 @@ const initial = {
                 total: 10047,
                 avgByAthlete: 0
             }
+        },
+        lugano: {
+            distance: {
+                total: 25480,
+                avgByAthlete: 0
+            },
+            elevation: {
+                total: 236,
+                avgByAthlete: 0
+            },
+            time: {
+                total: 7567,
+                avgByAthlete: 0
+            }
         }
     }
 };
@@ -92,6 +107,12 @@ const initialValues = {
         "elevation": {"total": 1243, "avgByAthlete": 248.6},
         "time": {"total": 44050.5, "avgByAthlete": 8810.1},
         "pace": {"avgByAthlete": 0.34685433070866145, "total": 0.3468543307086614}
+    },
+    "lugano": {
+        "distance": {"total": 48380, "avgByAthlete": 48380},
+        "elevation": {"total": 346, "avgByAthlete": 346},
+        "time": {"total": 14940.8, "avgByAthlete": 14940.8},
+        "pace": {"avgByAthlete": 0.30882182720132284, "total": 0.30882182720132284}
     }
 };
 
@@ -233,6 +254,7 @@ function groupAndAnaliseData(teams) {
     }
 
     function getRanking() {
+//        const ranking = Object.assign({}, initial.first);
         const ranking = Object.assign({}, initialValues);
 
         athletesRanking.forEach((item) => {
