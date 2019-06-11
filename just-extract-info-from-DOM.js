@@ -1,3 +1,5 @@
+const currentDate = new Date();
+const formattedDate = currentDate.getDate() + '.' + currentDate.getMonth() + '.' + currentDate.getFullYear();
 const teams = {
     zurich: ['/athletes/29041600', '/athletes/23067415', '/athletes/6228065', '/athletes/15282580', '/athletes/26022333',
         '/athletes/5257885', '/athletes/20385538', '/athletes/23837170', '/athletes/29177863'],
@@ -29,7 +31,7 @@ function getTeamsData() {
 const dimensions = ['distance', 'elevation', 'time', 'pace'];
 
 const initial = {
-    first: {
+    week_1: {
         manila: {
             distance: {
                 total: 61080,
@@ -139,9 +141,11 @@ function groupAndAnaliseData(teams) {
     const leadersRankingTableByAthlete = leadersRankingTableByTeam.cloneNode(true);
     tableParent.appendChild(leadersRankingTableByAthlete);
 
-    tableParent.insertBefore(generateTableDataByTeams(), leadersRankingTableByTeam);
-    tableParent.insertBefore(createElement('h2', {'style': 'text-align: center'}, 'By team (office location)'), leadersRankingTableByTeam);
-    tableParent.insertBefore(createElement('h2', {'style': 'text-align: center'}, 'By athlete'), leadersRankingTableByAthlete);
+    const tableDataByTeams = generateTableDataByTeams();
+    tableParent.insertBefore(tableDataByTeams, leadersRankingTableByTeam);
+    tableParent.insertBefore(createElement('h2', {'style': 'text-align: center'}, 'Teams'), tableDataByTeams);
+    tableParent.insertBefore(createElement('h2', {'style': 'text-align: center'}, 'Classification by team (at ' + formattedDate + ')'), leadersRankingTableByTeam);
+    tableParent.insertBefore(createElement('h2', {'style': 'text-align: center'}, 'Average by athlete (at ' + formattedDate + ')'), leadersRankingTableByAthlete);
 
     const resultsByAthlete = {};
     const ranking = getRanking();
@@ -172,7 +176,11 @@ function groupAndAnaliseData(teams) {
 
             rows.push(createElement('tr', {}, [teamName, athletesCell, athletesNameCell]));
         }
-        return createElement('table', {}, rows)
+        const th1 = createElement('th', {}, 'team');
+        const th2 = createElement('th', {'colspan': '2'}, 'members (at ' + formattedDate + ')');
+        const thead = createElement('thead', {}, [th1, th2]);
+        const tbody = createElement('tbody', {}, rows);
+        return createElement('table', {'style': 'width: 60%; margin: auto'}, [thead, tbody]);
     }
 
     function generateResults(byAthelete = false) {
@@ -358,12 +366,12 @@ function groupAndAnaliseData(teams) {
     }
 
     function createCellResult(team, result) {
-        const teamName = createElement('span', {'class': 'athlete-name'}, team);
+        const teamName = createElement('span', {'class': 'athlete-name', 'style': 'max-width: 100%; width: 99%'}, team);
         teamName.style.fontWeight = 'bold';
         teamName.style.fontVariant = 'small-caps';
         teamName.style.textTransform = 'capitalize';
 
-        const dimension = createElement('span', {'class': 'dimension'}, result);
+        const dimension = createElement('span', {'class': 'dimension', 'style': 'font-size: .9em'}, result);
         dimension.style.marginTop = '3px';
 
         return createElement('td', {}, [teamName, dimension]);
