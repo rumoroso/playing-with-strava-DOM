@@ -1,6 +1,6 @@
 const teams = {
     zurich: ['/athletes/29041600', '/athletes/23067415', '/athletes/6228065', '/athletes/15282580', '/athletes/26022333',
-        '/athletes/5257885', '/athletes/20385538', '/athletes/23837170', '/athletes/29177863'],
+        '/athletes/5257885', '/athletes/20385538', '/athletes/23837170', '/athletes/29177863', 'athletes/23870845', 'athletes/12048356'],
     manila: ['/athletes/18519747', '/athletes/16500041', '/athletes/42704472', '/athletes/41904167', '/athletes/43010190',
         '/athletes/39378771', '/athletes/42168384', '/athletes/43058513', '/athletes/41572080'],
     edinburgh: ['/athletes/16031782', '/athletes/31565097', '/athletes/42912286', '/athletes/42949260', '/athletes/42945930'],
