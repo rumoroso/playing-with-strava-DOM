@@ -215,13 +215,13 @@ function groupAndAnaliseData(teams) {
                 if (dimension === 'distance') {
                     const distance = value / 1000;
                     const mi = value / 1609;
-                    value = distance.toFixed(2) + 'km - ' + mi.toFixed(2) + 'mi';
+                    value = parseFloat(distance.toFixed(2)) + 'km - ' + parseFloat(mi.toFixed(2)) + 'mi';
                 } else if (dimension === 'time') {
                     value = secondsTimeConvert(value);
                 } else if (dimension === 'elevation') {
-                    const elevation = value.toFixed(2);
-                    const ft = value / 0.3048;
-                    value = elevation + 'm - ' + ft.toFixed(2) + 'ft';
+                    const elevation = parseFloat(value.toFixed(2));
+                    const ft = parseFloat(value / 0.3048);
+                    value = parseFloat(elevation) + 'm - ' + parseFloat(ft.toFixed(2)) + 'ft';
                 } else if (dimension === 'pace') {
                     const byMi = secondsTimeConvert(value * 1609, true);
                     value = secondsTimeConvert(value * 1000, true) + ' /km - ' + byMi + ' /mi';
