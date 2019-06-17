@@ -173,8 +173,8 @@ function groupAndAnaliseData(teams) {
     const ranking = getRanking();
 
     console.log(JSON.stringify(ranking));
-    generateResults();
-    generateResults(true);
+    generateResults(ranking);
+    generateResultsByAthlete(ranking);
 
     function generateTableDataByTeams() {
         const rows = [];
@@ -205,10 +205,14 @@ function groupAndAnaliseData(teams) {
         return createElement('table', {'style': 'width: 60%; margin: auto'}, [thead, tbody]);
     }
 
-    function generateResults(byAthelete = false) {
+    function generateResultsByAthlete(ranking) {
+        return generateResults(ranking, true)
+    }
+
+    function generateResults(ranking, byAthelete = false) {
         const table = !byAthelete ? leadersRankingTableByTeam : leadersRankingTableByAthlete;
 
-        dimensions.forEach((dimension, dimensionIndex) => {
+        dimensions.forEach((dimension) => {
             table.querySelector('thead tr').appendChild(createElement('th', {}, dimension));
 
             const rankingByDimensionAndTeam = getRankingByDimension(ranking, dimension, byAthelete);
@@ -222,10 +226,14 @@ function groupAndAnaliseData(teams) {
                 orderedRanking.sort(sortDesc);
             } else {
                 orderedRanking.sort(sortAsc);
+                if(orderedRanking[0].value === 0){
+                    orderedRanking.push(orderedRanking[0]);
+                    orderedRanking.splice(0, 1);
+                }
             }
 
             orderedRanking.forEach((item, index) => {
-                let row = table.querySelector('tbody').querySelectorAll('tr')[index];
+                let row = table.querySelectorAll('tbody tr')[index];
 
                 if (!row) {
                     row = createElement('tr', {}, createAchievementCell('achievement kom-' + (index + 1) + (index ? '' : 'a')));
@@ -245,8 +253,12 @@ function groupAndAnaliseData(teams) {
                     const ft = parseFloat(value / 0.3048);
                     value = parseFloat(elevation) + 'm - ' + parseFloat(ft.toFixed(2)) + 'ft';
                 } else if (dimension === 'pace') {
-                    const byMi = secondsTimeConvert(value * 1609, true);
-                    value = secondsTimeConvert(value * 1000, true) + ' /km - ' + byMi + ' /mi';
+                    if(value){
+                        const byMi = secondsTimeConvert(value * 1609, true);
+                        value = secondsTimeConvert(value * 1000, true) + ' /km - ' + byMi + ' /mi';
+                    }else{
+                        value = '- /km - /mi';
+                    }
                 }
 
                 row.appendChild(createCellResult(team, value));
@@ -289,6 +301,9 @@ function groupAndAnaliseData(teams) {
 
         athletesRanking.forEach((item) => {
             const cells = item.querySelectorAll('td');
+            if(!cells[1]){
+                return;
+            }
             const athlete = cells[1].querySelector('a').getAttribute('href');
             const team = getTeamForUser(athlete);
             const realDistance = parseFloat(cells[2].textContent.trim().replace(',', '.')) || 0; // in km
@@ -321,8 +336,8 @@ function groupAndAnaliseData(teams) {
             ranking[team].time.avgByAthlete = ranking[team].time.total / teamLength;
             ranking[team].time.total = ranking[team].time.total;
             ranking[team].pace = {};
-            ranking[team].pace.avgByAthlete = ranking[team].time.avgByAthlete / ranking[team].distance.avgByAthlete;
-            ranking[team].pace.total = ranking[team].time.total / ranking[team].distance.total;
+            ranking[team].pace.avgByAthlete = ranking[team].time.avgByAthlete ? (ranking[team].time.avgByAthlete / ranking[team].distance.avgByAthlete) : 0;
+            ranking[team].pace.total = ranking[team].time.total ? (ranking[team].time.total / ranking[team].distance.total) : 0;
         }
 
         return ranking;
