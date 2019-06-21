@@ -327,15 +327,21 @@ function groupAndAnaliseData(teams) {
             });
         });
 
-        const totalsHeaderCell = createElement('td', {'style': 'font-weight: bold'}, 'Totals');
-        const totalsRow = createElement('tr', {'style': 'text-align: center'}, totalsHeaderCell);
+        addTotalsRow(table, totals);
 
-        for (const dimension in totals) {
-            const value = totals[dimension];
-            const totalCell = createElement('td', {}, adaptValueToShow(dimension, value));
-            totalsRow.appendChild(totalCell);
+        function addTotalsRow(table, totals){
+            const totalsHeaderCell = createElement('td', {'style': 'font-weight: bold'}, 'Totals');
+            const totalsRow = createElement('tr', {'style': 'text-align: center'}, totalsHeaderCell);
+
+            totals.pace = totals.time ? (totals.time / totals.distance) : 0;
+            for (const dimension in totals) {
+                const value = totals[dimension];
+                const totalCell = createElement('td', {}, adaptValueToShow(dimension, value));
+                totalsRow.appendChild(totalCell);
+            }
+            table.querySelector('tbody').appendChild(totalsRow);
         }
-        table.querySelector('tbody').appendChild(totalsRow);
+
 
         function adaptValueToShow(dimension, value){
             let valueToShow;
