@@ -289,6 +289,7 @@ function groupAndAnaliseData(teams) {
 
     function generateResults(ranking, byAthelete = false) {
         const table = !byAthelete ? leadersRankingTableByTeam : leadersRankingTableByAthlete;
+        const totals = {distance: 0, time: 0, elevation: 0, pace: 0};
 
         dimensions.forEach((dimension) => {
             table.querySelector('thead tr').appendChild(createElement('th', {}, dimension));
@@ -320,28 +321,46 @@ function groupAndAnaliseData(teams) {
                 const team = item.team;
                 let value = item.value;
 
-                if (dimension === 'distance') {
-                    const distance = value / 1000;
-                    const mi = value / 1609;
-                    value = parseFloat(distance.toFixed(2)) + 'km - ' + parseFloat(mi.toFixed(2)) + 'mi';
-                } else if (dimension === 'time') {
-                    value = secondsTimeConvert(value);
-                } else if (dimension === 'elevation') {
-                    const elevation = parseFloat(value.toFixed(2));
-                    const ft = parseFloat(value / 0.3048);
-                    value = parseFloat(elevation) + 'm - ' + parseFloat(ft.toFixed(2)) + 'ft';
-                } else if (dimension === 'pace') {
-                    if (value) {
-                        const byMi = secondsTimeConvert(value * 1609, true);
-                        value = secondsTimeConvert(value * 1000, true) + ' /km - ' + byMi + ' /mi';
-                    } else {
-                        value = '- /km - /mi';
-                    }
-                }
+                totals[dimension] += value;
 
-                row.appendChild(createCellResult(team, value));
+                row.appendChild(createCellResult(team, adaptValueToShow(dimension, value)));
             });
         });
+
+        const totalsHeaderCell = createElement('td', {'style': 'font-weight: bold'}, 'Totals');
+        const totalsRow = createElement('tr', {'style': 'text-align: center'}, totalsHeaderCell);
+
+        for (const dimension in totals) {
+            const value = totals[dimension];
+            const totalCell = createElement('td', {}, adaptValueToShow(dimension, value));
+            totalsRow.appendChild(totalCell);
+        }
+        table.querySelector('tbody').appendChild(totalsRow);
+
+        function adaptValueToShow(dimension, value){
+            let valueToShow;
+
+            if (dimension === 'distance') {
+                const distance = value / 1000;
+                const mi = value / 1609;
+                valueToShow = parseFloat(distance.toFixed(2)) + 'km - ' + parseFloat(mi.toFixed(2)) + 'mi';
+            } else if (dimension === 'time') {
+                valueToShow = secondsTimeConvert(value);
+            } else if (dimension === 'elevation') {
+                const elevation = parseFloat(value.toFixed(2));
+                const ft = parseFloat(value / 0.3048);
+                valueToShow = parseFloat(elevation) + 'm - ' + parseFloat(ft.toFixed(2)) + 'ft';
+            } else if (dimension === 'pace') {
+                if (value) {
+                    const byMi = secondsTimeConvert(value * 1609, true);
+                    valueToShow = secondsTimeConvert(value * 1000, true) + ' /km - ' + byMi + ' /mi';
+                } else {
+                    valueToShow = '- /km - /mi';
+                }
+            }
+
+            return valueToShow;
+        }
 
         function sortDesc(a, b) {
             if (a.value > b.value) {
@@ -386,19 +405,14 @@ function groupAndAnaliseData(teams) {
             const team = getTeamForUser(athlete);
             const realDistance = parseFloat(cells[2].textContent.trim().replace(',', '.')) || 0; // in km
             const distance = realDistance * 1000; // in meters
-            cells[2].textContent = realDistance;
             const runs = parseFloat(cells[3].textContent.trim().replace(',', '.')) || 0;
-            cells[3].textContent = runs;
             const longest = parseFloat(cells[4].textContent.trim().replace(',', '.')) || 0;
-            cells[4].textContent = longest;
 
             const avg = cells[5].textContent.replace('/km', '').trim();
             const avgPace = timeConverterToSeconds(avg); // in seconds
             const time = realDistance * avgPace;
-            cells[5].textContent = secondsTimeConvert(time);
 
             const elevation = parseFloat(cells[6].textContent.trim().replace('.', '')) || 0;
-            cells[6].textContent = elevation;
 
             resultsByAthlete[athlete] = {distance, runs, longest, avgPace, elevation, time};
 
