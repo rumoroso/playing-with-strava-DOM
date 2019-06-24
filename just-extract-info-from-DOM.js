@@ -55,6 +55,10 @@ const teams = {
         {"url": "/athletes/3491386", "name": "Mauro MDC"}//
     ]
 };
+
+const athletesThatHaveRan = ["/athletes/16031782", "/athletes/16500041", "/athletes/14570654", "/athletes/41904167", "/athletes/43010190", "/athletes/29041600", "/athletes/42949260", "/athletes/25044835", "/athletes/43451716", "/athletes/43451502", "/athletes/23837170", "/athletes/42704472", "/athletes/39378771", "/athletes/42945930", "/athletes/29177863", "/athletes/42912286", "/athletes/42168384", "/athletes/41572080", "/athletes/43058513", "/athletes/6228065", "/athletes/18519747", "/athletes/5257885", "/athletes/31565097", "/athletes/15282580", "/athletes/12048356", "/athletes/30041945"];
+const athletesThatHaveRanByTeam = {edinburgh: 5, manila: 11, lugano: 3, zurich: 7, madrid: 0};
+
 const currentDate = new Date();
 const formattedDate = currentDate.getDate() + '.' + currentDate.getMonth() + '.' + currentDate.getFullYear();
 
@@ -184,33 +188,65 @@ const initial = {
             "time": {"total": 0, "avgByAthlete": 0},
             "pace": {"avgByAthlete": 0, "total": 0}
         }
+    },
+    week_III: {
+        "manila": {
+            "distance": {"total": 303180, "avgByAthlete": 27561.81818181818},
+            "elevation": {"total": 4197, "avgByAthlete": 381.54545454545456},
+            "time": {"total": 134763.2, "avgByAthlete": 12251.2},
+            "pace": {"avgByAthlete": 0.4444989775051125, "total": 0.4444989775051125}
+        },
+        "zurich": {
+            "distance": {"total": 217150, "avgByAthlete": 19740.909090909092},
+            "elevation": {"total": 3898, "avgByAthlete": 354.3636363636364},
+            "time": {"total": 76535.79999999999, "avgByAthlete": 6957.799999999999},
+            "pace": {"avgByAthlete": 0.3524559060557218, "total": 0.3524559060557218}
+        },
+        "edinburgh": {
+            "distance": {"total": 176500, "avgByAthlete": 35300},
+            "elevation": {"total": 1662, "avgByAthlete": 332.4},
+            "time": {"total": 59183.09999999999, "avgByAthlete": 11836.619999999999},
+            "pace": {"avgByAthlete": 0.3353150141643059, "total": 0.3353150141643059}
+        },
+        "lugano": {
+            "distance": {"total": 134380, "avgByAthlete": 33595},
+            "elevation": {"total": 1374, "avgByAthlete": 343.5},
+            "time": {"total": 44457.6, "avgByAthlete": 11114.4},
+            "pace": {"avgByAthlete": 0.33083494567643995, "total": 0.33083494567643995}
+        },
+        "madrid": {
+            "distance": {"total": 0, "avgByAthlete": 0},
+            "elevation": {"total": 0, "avgByAthlete": 0},
+            "time": {"total": 0, "avgByAthlete": 0},
+            "pace": {"avgByAthlete": 0, "total": 0}
+        }
     }
 };
 
 const initialValues = {
     "manila": {
-        "distance": {"total": 303180, "avgByAthlete": 27561.81818181818},
-        "elevation": {"total": 4197, "avgByAthlete": 381.54545454545456},
-        "time": {"total": 134763.2, "avgByAthlete": 12251.2},
-        "pace": {"avgByAthlete": 0.4444989775051125, "total": 0.4444989775051125}
+        "distance": {"total": 502680, "avgByAthlete": 41890},
+        "elevation": {"total": 6616, "avgByAthlete": 551.3333333333334},
+        "time": {"total": 217934.80000000002, "avgByAthlete": 18161.233333333334},
+        "pace": {"avgByAthlete": 0.43354579454125886, "total": 0.4335457945412589}
     },
     "zurich": {
-        "distance": {"total": 217150, "avgByAthlete": 19740.909090909092},
-        "elevation": {"total": 3898, "avgByAthlete": 354.3636363636364},
-        "time": {"total": 76535.79999999999, "avgByAthlete": 6957.799999999999},
-        "pace": {"avgByAthlete": 0.3524559060557218, "total": 0.3524559060557218}
+        "distance": {"total": 273550, "avgByAthlete": 22795.833333333332},
+        "elevation": {"total": 4430, "avgByAthlete": 369.1666666666667},
+        "time": {"total": 95779.49999999999, "avgByAthlete": 7981.624999999999},
+        "pace": {"avgByAthlete": 0.3501352586364467, "total": 0.3501352586364467}
     },
     "edinburgh": {
-        "distance": {"total": 176500, "avgByAthlete": 35300},
-        "elevation": {"total": 1662, "avgByAthlete": 332.4},
-        "time": {"total": 59183.09999999999, "avgByAthlete": 11836.619999999999},
-        "pace": {"avgByAthlete": 0.3353150141643059, "total": 0.3353150141643059}
+        "distance": {"total": 275500, "avgByAthlete": 55100},
+        "elevation": {"total": 1958, "avgByAthlete": 391.6},
+        "time": {"total": 92877.29999999999, "avgByAthlete": 18575.46},
+        "pace": {"avgByAthlete": 0.33712268602540835, "total": 0.3371226860254083}
     },
     "lugano": {
-        "distance": {"total": 134380, "avgByAthlete": 33595},
-        "elevation": {"total": 1374, "avgByAthlete": 343.5},
-        "time": {"total": 44457.6, "avgByAthlete": 11114.4},
-        "pace": {"avgByAthlete": 0.33083494567643995, "total": 0.33083494567643995}
+        "distance": {"total": 208580, "avgByAthlete": 52145},
+        "elevation": {"total": 2270, "avgByAthlete": 567.5},
+        "time": {"total": 69080.6, "avgByAthlete": 17270.15},
+        "pace": {"avgByAthlete": 0.3311947454214211, "total": 0.3311947454214211}
     },
     "madrid": {
         "distance": {"total": 0, "avgByAthlete": 0},
@@ -243,18 +279,23 @@ function groupAndAnaliseData(teams) {
     const leadersRankingTableByAthlete = leadersRankingTableByTeam.cloneNode(true);
     tableParent.appendChild(leadersRankingTableByAthlete);
 
+    const leadersRankingTableByAthleteThaRan = leadersRankingTableByTeam.cloneNode(true);
+    tableParent.appendChild(leadersRankingTableByAthleteThaRan);
+
     const tableDataByTeams = generateTableDataByTeams();
     tableParent.insertBefore(tableDataByTeams, leadersRankingTableByTeam);
     tableParent.insertBefore(createElement('h2', {'style': 'text-align: center'}, 'Teams'), tableDataByTeams);
     tableParent.insertBefore(createElement('h2', {'style': 'text-align: center'}, 'Classification by team (at ' + formattedDate + ')'), leadersRankingTableByTeam);
     tableParent.insertBefore(createElement('h2', {'style': 'text-align: center'}, 'Average by athlete (at ' + formattedDate + ')'), leadersRankingTableByAthlete);
+    tableParent.insertBefore(createElement('h2', {'style': 'text-align: center'}, 'Average by athlete that have ran at least once (at ' + formattedDate + ')'), leadersRankingTableByAthleteThaRan);
 
     const resultsByAthlete = {};
     const ranking = getRanking();
 
     console.log(JSON.stringify(ranking));
-    generateResults(ranking);
-    generateResultsByAthlete(ranking);
+    generateResults(ranking, leadersRankingTableByTeam, 'total');
+    generateResults(ranking, leadersRankingTableByAthlete, 'avgByAthlete');
+    generateResults(ranking, leadersRankingTableByAthleteThaRan, 'avgByAthleteThaRan');
 
     function generateTableDataByTeams() {
         const rows = [];
@@ -266,7 +307,7 @@ function groupAndAnaliseData(teams) {
             teamName.style.textTransform = 'capitalize';
 
 
-            const athletesCell = createElement('td', {}, athletesInTeamLength);
+            const athletesCell = createElement('td', {'style': 'text-align: center'}, athletesInTeamLength);
 
             let list = '';
             for (let i = 0; i < athletesInTeamLength; i++) {
@@ -275,28 +316,25 @@ function groupAndAnaliseData(teams) {
             }
             list = list.slice(0, -2);
             const athletesNameCell = createElement('td', {}, list);
+            const athletesThatHaveRan = createElement('td', {'style': 'text-align: center'}, athletesThatHaveRanByTeam[team]);
 
-            rows.push(createElement('tr', {}, [teamName, athletesCell, athletesNameCell]));
+            rows.push(createElement('tr', {}, [teamName, athletesCell, athletesNameCell, athletesThatHaveRan]));
         }
         const th1 = createElement('th', {}, 'team');
         const th2 = createElement('th', {'colspan': '2'}, 'members (at ' + formattedDate + ')');
-        const thead = createElement('thead', {}, [th1, th2]);
+        const th3 = createElement('th', {'style': 'white-space: nowrap'}, 'have ran');
+        const thead = createElement('thead', {}, [th1, th2, th3]);
         const tbody = createElement('tbody', {}, rows);
         return createElement('table', {'style': 'width: 60%; margin: auto'}, [thead, tbody]);
     }
 
-    function generateResultsByAthlete(ranking) {
-        return generateResults(ranking, true)
-    }
-
-    function generateResults(ranking, byAthelete = false) {
-        const table = !byAthelete ? leadersRankingTableByTeam : leadersRankingTableByAthlete;
+    function generateResults(ranking, table, pattern = 'total') {
         const totals = {distance: 0, time: 0, elevation: 0, pace: 0};
 
         dimensions.forEach((dimension) => {
             table.querySelector('thead tr').appendChild(createElement('th', {}, dimension));
 
-            const rankingByDimensionAndTeam = getRankingByDimension(ranking, dimension, byAthelete);
+            const rankingByDimensionAndTeam = getRankingByDimension(ranking, dimension, pattern);
             const orderedRanking = [];
             for (const team in rankingByDimensionAndTeam) {
                 const value = rankingByDimensionAndTeam[team];
@@ -336,11 +374,11 @@ function groupAndAnaliseData(teams) {
             const totalsRow = createElement('tr', {'style': 'text-align: center'}, totalsHeaderCell);
 
             totals.pace = totals.time ? (totals.time / totals.distance) : 0;
-            for (const dimension in totals) {
+            dimensions.forEach((dimension) => {
                 const value = totals[dimension];
                 const totalCell = createElement('td', {}, adaptValueToShow(dimension, value));
                 totalsRow.appendChild(totalCell);
-            }
+            });
             table.querySelector('tbody').appendChild(totalsRow);
         }
 
@@ -388,10 +426,10 @@ function groupAndAnaliseData(teams) {
             return 0;
         }
 
-        function getRankingByDimension(ranking, dimension, byAthlete) {
+        function getRankingByDimension(ranking, dimension, pattern) {
             const rankingByDimension = {};
             for (const team in ranking) {
-                let value = !byAthlete ? ranking[team][dimension].total : ranking[team][dimension].avgByAthlete;
+                let value = ranking[team][dimension][pattern];
                 rankingByDimension[team] = value;
             }
 
@@ -429,15 +467,23 @@ function groupAndAnaliseData(teams) {
 
         for (const team in ranking) {
             const teamLength = teams[team].length;
+            const thatRan = athletesThatHaveRanByTeam[team];
             ranking[team].distance.avgByAthlete = (ranking[team].distance.total / teamLength);
-            ranking[team].distance.total = ranking[team].distance.total;
+            ranking[team].distance.avgByAthleteThaRan = (ranking[team].distance.total / thatRan);
             ranking[team].elevation.avgByAthlete = ranking[team].elevation.total / teamLength;
-            ranking[team].elevation.total = ranking[team].elevation.total;
+            ranking[team].elevation.avgByAthleteThaRan = (ranking[team].elevation.total / thatRan);
             ranking[team].time.avgByAthlete = ranking[team].time.total / teamLength;
-            ranking[team].time.total = ranking[team].time.total;
+            ranking[team].time.avgByAthleteThaRan = (ranking[team].time.total / thatRan);
             ranking[team].pace = {};
             ranking[team].pace.avgByAthlete = ranking[team].time.avgByAthlete ? (ranking[team].time.avgByAthlete / ranking[team].distance.avgByAthlete) : 0;
+            ranking[team].pace.avgByAthleteThaRan = ranking[team].time.avgByAthleteThaRan ? (ranking[team].time.avgByAthleteThaRan / ranking[team].distance.avgByAthleteThaRan) : 0;
             ranking[team].pace.total = ranking[team].time.total ? (ranking[team].time.total / ranking[team].distance.total) : 0;
+        }
+
+        for (const team in ranking) {
+            if(!ranking[team].distance.total){
+                delete ranking[team];
+            }
         }
 
         return ranking;
