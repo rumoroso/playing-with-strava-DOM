@@ -5,7 +5,7 @@ const teams1 = {
     manila: ['/athletes/18519747', '/athletes/16500041', '/athletes/42704472', '/athletes/41904167', '/athletes/43010190',
         '/athletes/39378771', '/athletes/42168384', '/athletes/43058513', '/athletes/41572080', '/athletes/43451502', '/athletes/43451716'],
     edinburgh: ['/athletes/16031782', '/athletes/31565097', '/athletes/42912286', '/athletes/42949260', '/athletes/42945930'],
-    lugano: ['/athletes/14570654', '/athletes/25044835', '/athletes/5690359', '/athletes/30041945'],
+    lugano: ['/athletes/14570654', '/athletes/25044835', '/athletes/5690359', '/athletes/30041945', '/athletes/26765072'],
     madrid: ['/athletes/3491386']
 };
 
@@ -49,7 +49,8 @@ const teams = {
         {"url": "/athletes/14570654", "name": "nathan quadrio"},
         {"url": "/athletes/25044835", "name": "Emanuele Della Valle"},
         {"url": "/athletes/5690359", "name": "Michele  Sasso"},
-        {"url": "/athletes/30041945", "name": "Martina Dotta"}
+        {"url": "/athletes/5690359", "name": "Martina Dotta"},
+        {"url": "/athletes/26765072", "name": "Daniele Proserpio"}
     ],
     "madrid": [
         {"url": "/athletes/3491386", "name": "Mauro MDC"}//
