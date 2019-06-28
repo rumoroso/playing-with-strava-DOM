@@ -58,7 +58,7 @@ const teams = {
 };
 
 const athletesThatHaveRan = ["/athletes/16031782", "/athletes/16500041", "/athletes/14570654", "/athletes/41904167", "/athletes/43010190", "/athletes/29041600", "/athletes/42949260", "/athletes/25044835", "/athletes/43451716", "/athletes/43451502", "/athletes/23837170", "/athletes/42704472", "/athletes/39378771", "/athletes/42945930", "/athletes/29177863", "/athletes/42912286", "/athletes/42168384", "/athletes/41572080", "/athletes/43058513", "/athletes/6228065", "/athletes/18519747", "/athletes/5257885", "/athletes/31565097", "/athletes/15282580", "/athletes/12048356", "/athletes/30041945"];
-const athletesThatHaveRanByTeam = {edinburgh: 5, manila: 11, lugano: 3, zurich: 7, madrid: 0};
+const athletesThatHaveRanByTeam = {edinburgh: 5, manila: 11, lugano: 3, zurich: 8, madrid: 0};
 
 const currentDate = new Date();
 const formattedDate = currentDate.getDate() + '.' + currentDate.getMonth() + '.' + currentDate.getFullYear();
@@ -300,9 +300,12 @@ function groupAndAnaliseData(teams) {
 
     function generateTableDataByTeams() {
         const rows = [];
+        let totalAthletes = 0;
+        let totalAthletesThatRan = 0;
         for (const team in teams) {
             const teamName = createElement('td', {}, team);
             const athletesInTeamLength = teams[team].length;
+            totalAthletes += athletesInTeamLength;
             teamName.style.fontWeight = 'bold';
             teamName.style.fontVariant = 'small-caps';
             teamName.style.textTransform = 'capitalize';
@@ -317,10 +320,18 @@ function groupAndAnaliseData(teams) {
             }
             list = list.slice(0, -2);
             const athletesNameCell = createElement('td', {}, list);
-            const athletesThatHaveRan = createElement('td', {'style': 'text-align: center'}, athletesThatHaveRanByTeam[team]);
+            const runnersLength = athletesThatHaveRanByTeam[team];
+            const athletesThatHaveRan = createElement('td', {'style': 'text-align: center'}, runnersLength + ' (' + (runnersLength*100/athletesInTeamLength).toFixed(2) + '%)');
+            totalAthletesThatRan += runnersLength;
 
             rows.push(createElement('tr', {}, [teamName, athletesCell, athletesNameCell, athletesThatHaveRan]));
         }
+        const totalsCell = createElement('td', {'style': 'font-weight: bold'}, 'Totals');
+        const athletesTotalsCell = createElement('td', {'style': 'text-align: center'}, totalAthletes);
+        const emtpyCell= createElement('td', {}, '');
+        const athletesTotalsThatRanCell = createElement('td', {'style': 'text-align: center'}, totalAthletesThatRan);
+        rows.push(createElement('tr', {}, [totalsCell, athletesTotalsCell, emtpyCell, athletesTotalsThatRanCell]));
+
         const th1 = createElement('th', {}, 'team');
         const th2 = createElement('th', {'colspan': '2'}, 'members (at ' + formattedDate + ')');
         const th3 = createElement('th', {'style': 'white-space: nowrap'}, 'have ran');
