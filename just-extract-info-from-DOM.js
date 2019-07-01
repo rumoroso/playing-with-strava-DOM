@@ -30,7 +30,6 @@ const teams = {
         {"url": "/athletes/42704472", "name": "PJ de Leon"},
         {"url": "/athletes/41904167", "name": "Kevin Francisco"},//
         {"url": "/athletes/43010190", "name": "Renz Estacio"},
-        {"url": "/athletes/39378771", "name": "Rex Nohay"},
         {"url": "/athletes/42168384", "name": "Andre Gabo"},
         {"url": "/athletes/43058513", "name": "Kat Samboa"},
         {"url": "/athletes/41572080", "name": "Kristian Villabroza"},
@@ -49,16 +48,19 @@ const teams = {
         {"url": "/athletes/14570654", "name": "nathan quadrio"},
         {"url": "/athletes/25044835", "name": "Emanuele Della Valle"},
         {"url": "/athletes/5690359", "name": "Michele  Sasso"},
-        {"url": "/athletes/5690359", "name": "Martina Dotta"},
-        {"url": "/athletes/26765072", "name": "Daniele Proserpio"}
+        {"url": "/athletes/30041945", "name": "Martina Dotta"},
+        {"url": "/athletes/26765072", "name": "Daniele Proserpio"},
+        {"url": "/athletes/13629176", "name": "Adamo Maddalena"},
     ],
     "madrid": [
         {"url": "/athletes/3491386", "name": "Mauro MDC"}//
     ]
 };
 
-const athletesThatHaveRan = ["/athletes/16031782", "/athletes/16500041", "/athletes/14570654", "/athletes/41904167", "/athletes/43010190", "/athletes/29041600", "/athletes/42949260", "/athletes/25044835", "/athletes/43451716", "/athletes/43451502", "/athletes/23837170", "/athletes/42704472", "/athletes/39378771", "/athletes/42945930", "/athletes/29177863", "/athletes/42912286", "/athletes/42168384", "/athletes/41572080", "/athletes/43058513", "/athletes/6228065", "/athletes/18519747", "/athletes/5257885", "/athletes/31565097", "/athletes/15282580", "/athletes/12048356", "/athletes/30041945"];
-const athletesThatHaveRanByTeam = {edinburgh: 5, manila: 11, lugano: 3, zurich: 8, madrid: 0};
+const athletesThatHaveRan = ["/athletes/16031782", "/athletes/16500041", "/athletes/14570654", "/athletes/41904167", "/athletes/43010190", "/athletes/29041600", "/athletes/42949260", "/athletes/25044835", "/athletes/43451716", "/athletes/43451502", "/athletes/23837170", "/athletes/42704472", "/athletes/39378771", "/athletes/42945930", "/athletes/29177863", "/athletes/42912286", "/athletes/42168384", "/athletes/41572080", "/athletes/43058513", "/athletes/6228065", "/athletes/18519747", "/athletes/5257885", "/athletes/31565097", "/athletes/15282580", "/athletes/12048356", "/athletes/30041945", "/athletes/23067415", "/athletes/5690359", "/athletes/26765072", "/athletes/13629176"];
+const athletesThatHaveRanByTeam = {edinburgh: 5, manila: 11, lugano: 6, zurich: 8};
+
+
 
 const currentDate = new Date();
 const formattedDate = currentDate.getDate() + '.' + currentDate.getMonth() + '.' + currentDate.getFullYear();
@@ -320,8 +322,9 @@ function groupAndAnaliseData(teams) {
             }
             list = list.slice(0, -2);
             const athletesNameCell = createElement('td', {}, list);
-            const runnersLength = athletesThatHaveRanByTeam[team];
-            const athletesThatHaveRan = createElement('td', {'style': 'text-align: center'}, runnersLength + ' (' + (runnersLength*100/athletesInTeamLength).toFixed(2) + '%)');
+            const runnersLength = athletesThatHaveRanByTeam[team] || 0;
+            const percentage = runnersLength ? (runnersLength*100/athletesInTeamLength).toFixed(2) : 0;
+            const athletesThatHaveRan = createElement('td', {'style': 'text-align: center'}, runnersLength + ' (' + percentage + '%)');
             totalAthletesThatRan += runnersLength;
 
             rows.push(createElement('tr', {}, [teamName, athletesCell, athletesNameCell, athletesThatHaveRan]));
