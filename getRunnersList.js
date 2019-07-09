@@ -36,7 +36,10 @@ const originalList = {
     3491386: {name: "Mauro MDC", team: 'madrid'},
     5027913: {name: "Riccardo Burgaletta", team: 'lugano'},
     43940121: {name: "Alessandro Bertocchi", team: 'lugano'},
-    43945001: {name: "Giuliano Paris", team: 'lugano'}
+    43945001: {name: "Giuliano Paris", team: 'lugano'},
+    18897560: {name: "Artyom Romanov", team: 'zurich'},
+    44057878: {name: "Becky Pitts", team: 'london'},
+    15297420: {name: "Yevgeniy Ilyin", team: 'zurich'}
 };
 
 const createEventButton = document.querySelector('#club-event-js');

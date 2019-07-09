@@ -1,242 +1,80 @@
-const teams = {
-    "zurich": [
-        {"url": "/athletes/29041600", "name": "Jorge Rumoroso"}, //
-        {"url": "/athletes/23067415", "name": "Anca-Elena Alexandrescu"},//
-        {"url": "/athletes/6228065", "name": "Andrei C"},//
-        {"url": "/athletes/15282580", "name": "Andres Sanchez"},//
-        {"url": "/athletes/26022333", "name": "G L Lorenz"},//
-        {"url": "/athletes/5257885", "name": "Nicola Terrenghi"},
-        {"url": "/athletes/20385538", "name": "Stefano Pongelli"},
-        {"url": "/athletes/23837170", "name": "Theodor Radu"},
-        {"url": "/athletes/29177863", "name": "Ezani Schultheiss"},
-        {"url": "/athletes/23870845", "name": "Marc Bodenmüller"},
-        {"url": "/athletes/43480837", "name": "Nick Krommydas"},
-        {"url": "/athletes/12048356", "name": "Paul Tuxford"}
-    ],
-    "manila": [
-        {"url": "/athletes/18519747", "name": "Bryan Flores"},//
-        {"url": "/athletes/16500041", "name": "Jerome Sevilla"},//
-        {"url": "/athletes/42704472", "name": "PJ de Leon"},
-        {"url": "/athletes/41904167", "name": "Kevin Francisco"},//
-        {"url": "/athletes/43010190", "name": "Renz Estacio"},
-        {"url": "/athletes/42168384", "name": "Andre Gabo"},
-        {"url": "/athletes/43058513", "name": "Kat Samboa"},
-        {"url": "/athletes/41572080", "name": "Kristian Villabroza"},
-        {"url": "/athletes/43451502", "name": "Ann Margaret Silva"},
-        {"url": "/athletes/39378771", "name": "Rex Nohay"},
-        {"url": "/athletes/43451716", "name": "Michael Christian Torres"}
-    ],
-    "edinburgh": [
-        {"url": "/athletes/16031782", "name": "John Clark"},//
-        {"url": "/athletes/31565097", "name": "Stuart Dodds"},
-        {"url": "/athletes/42912286", "name": "Stuart Thomson"},
-        {"url": "/athletes/42945930", "name": "Gavin Donoghue"},//
-        {"url": "/athletes/42949260", "name": "Pirmin Zenklusen"}
-    ],
-    "lugano": [
-        {"url": "/athletes/14570654", "name": "nathan quadrio"},
-        {"url": "/athletes/25044835", "name": "Emanuele Della Valle"},
-        {"url": "/athletes/5690359", "name": "Michele  Sasso"},
-        {"url": "/athletes/30041945", "name": "Martina Dotta"},
-        {"url": "/athletes/26765072", "name": "Daniele Proserpio"},
-        {"url": "/athletes/13629176", "name": "Adamo Maddalena"},
-    ],
-    "madrid": [
-        {"url": "/athletes/3491386", "name": "Mauro MDC"}//
-    ]
+const runners = {
+    29041600: {name: "Jorge Rumoroso", team: 'zurich'},
+    23067415: {name: "Anca-Elena Alexandrescu", team: 'zurich'},
+    6228065: {name: "Andrei C", team: 'zurich'},
+    15282580: {name: "Andres Sanchez", team: 'zurich'},
+    26022333: {name: "G L Lorenz", team: 'zurich'},
+    5257885: {name: "Nicola Terrenghi", team: 'zurich'},
+    20385538: {name: "Stefano Pongelli", team: 'zurich'},
+    23837170: {name: "Theodor Radu", team: 'zurich'},
+    29177863: {name: "Ezani Schultheiss", team: 'zurich'},
+    23870845: {name: "Marc Bodenmüller", team: 'zurich'},
+    43480837: {name: "Nick Krommydas", team: 'zurich'},
+    12048356: {name: "Paul Tuxford", team: 'zurich'},
+    18519747: {name: "Bryan Flores", team: 'manila'},
+    16500041: {name: "Jerome Sevilla", team: 'manila'},
+    42704472: {name: "PJ de Leon", team: 'manila'},
+    41904167: {name: "Kevin Francisco", team: 'manila'},
+    43010190: {name: "Renz Estacio", team: 'manila'},
+    42168384: {name: "Andre Gabo", team: 'manila'},
+    43058513: {name: "Kat Samboa", team: 'manila'},
+    41572080: {name: "Kristian Villabroza", team: 'manila'},
+    43451502: {name: "Ann Margaret Silva", team: 'manila'},
+    39378771: {name: "Rex Nohay", team: 'manila'},
+    43451716: {name: "Michael Christian Torres", team: 'manila'},
+    16031782: {name: "John Clark", team: 'edinburgh'},
+    31565097: {name: "Stuart Dodds", team: 'edinburgh'},
+    42912286: {name: "Stuart Thomson", team: 'edinburgh'},
+    42945930: {name: "Gavin Donoghue", team: 'edinburgh'},
+    42949260: {name: "Pirmin Zenklusen", team: 'edinburgh'},
+    14570654: {name: "nathan quadrio", team: 'lugano'},
+    25044835: {name: "Emanuele Della Valle", team: 'lugano'},
+    5690359: {name: "Michele  Sasso", team: 'lugano'},
+    30041945: {name: "Martina Dotta", team: 'lugano'},
+    26765072: {name: "Daniele Proserpio", team: 'lugano'},
+    13629176: {name: "Adamo Maddalena", team: 'lugano'},
+    3491386: {name: "Mauro MDC", team: 'madrid'},
+    5027913: {name: "Riccardo Burgaletta", team: 'lugano'},
+    43940121: {name: "Alessandro Bertocchi", team: 'lugano'},
+    43945001: {name: "Giuliano Paris", team: 'lugano'},
+    18897560: {name: "Artyom Romanov", team: 'zurich'},
+    44057878: {name: "Becky Pitts", team: 'london'},
+    15297420: {name: "Yevgeniy Ilyin", team: 'zurich'}
 };
+const teams = {};
 
 const athletesThatHaveRan = [];
-const athletesThatHaveRanByTeam = {edinburgh: 0, manila: 0, lugano: 0, zurich: 0};
+const athletesThatHaveRanByTeam = {edinburgh: 4, zurich: 5, manila: 4, lugano: 6};
 
 const currentDate = new Date();
 const formattedDate = currentDate.getDate() + '.' + currentDate.getMonth() + '.' + currentDate.getFullYear();
 
-getTeamsData();
-
-function getTeamsData() {
-    const athletes = {};
-    const listsOfAthletes = document.querySelectorAll('.list-athletes li .text-headline a');
-    listsOfAthletes.forEach((item) => {
-            const href = item.getAttribute('href');
-            athletes[href] = item.textContent;
-        }
-    );
-
-    for (const team in teams) {
-        const athletesInTeamLength = teams[team].length;
-        for (let i = 0; i < athletesInTeamLength; i++) {
-            teams[team][i] = {'url': teams[team][i], 'name': athletes[teams[team][i]]};
-        }
-    }
-    console.log(JSON.stringify(teams));
-}
-
 const dimensions = ['distance', 'elevation', 'time', 'pace'];
-
-const initial = {
-    week_1: {
-        manila: {
-            distance: {
-                total: 61080,
-                avgByAthlete: 0
-            },
-            elevation: {
-                total: 828,
-                avgByAthlete: 0
-            },
-            time: {
-                total: 26288,
-                avgByAthlete: 0
-            }
-        },
-        zurich: {
-            distance: {
-                total: 30950,
-                avgByAthlete: 0
-            },
-            elevation: {
-                total: 562,
-                avgByAthlete: 0
-            },
-            time: {
-                total: 10576,
-                avgByAthlete: 0
-            }
-        },
-        edinburgh: {
-            distance: {
-                total: 23200,
-                avgByAthlete: 0
-            },
-            elevation: {
-                total: 167,
-                avgByAthlete: 0
-            },
-            time: {
-                total: 10047,
-                avgByAthlete: 0
-            }
-        },
-        lugano: {
-            distance: {
-                total: 25480,
-                avgByAthlete: 0
-            },
-            elevation: {
-                total: 236,
-                avgByAthlete: 0
-            },
-            time: {
-                total: 7567,
-                avgByAthlete: 0
-            }
-        },
-        madrid: {
-            distance: {
-                total: 0,
-                avgByAthlete: 0
-            },
-            elevation: {
-                total: 0,
-                avgByAthlete: 0
-            },
-            time: {
-                total: 0,
-                avgByAthlete: 0
-            }
-        }
-    },
-    week_II: {
-        "manila": {
-            "distance": {"total": 212580, "avgByAthlete": 23620},
-            "elevation": {"total": 2419, "avgByAthlete": 268.77777777777777},
-            "time": {"total": 96155.5, "avgByAthlete": 10683.944444444445},
-            "pace": {"avgByAthlete": 0.45232618308401545, "total": 0.45232618308401545}
-        },
-        "zurich": {
-            "distance": {"total": 107750, "avgByAthlete": 11972.222222222223},
-            "elevation": {"total": 1730, "avgByAthlete": 192.22222222222223},
-            "time": {"total": 36381.299999999996, "avgByAthlete": 4042.3666666666663},
-            "pace": {"avgByAthlete": 0.33764547563805103, "total": 0.33764547563805103}
-        },
-        "edinburgh": {
-            "distance": {"total": 127000, "avgByAthlete": 25400},
-            "elevation": {"total": 1243, "avgByAthlete": 248.6},
-            "time": {"total": 44050.5, "avgByAthlete": 8810.1},
-            "pace": {"avgByAthlete": 0.34685433070866145, "total": 0.3468543307086614}
-        },
-        "lugano": {
-            "distance": {"total": 48380, "avgByAthlete": 48380},
-            "elevation": {"total": 346, "avgByAthlete": 346},
-            "time": {"total": 14940.8, "avgByAthlete": 14940.8},
-            "pace": {"avgByAthlete": 0.30882182720132284, "total": 0.30882182720132284}
-        },
-        "madrid": {
-            "distance": {"total": 0, "avgByAthlete": 0},
-            "elevation": {"total": 0, "avgByAthlete": 0},
-            "time": {"total": 0, "avgByAthlete": 0},
-            "pace": {"avgByAthlete": 0, "total": 0}
-        }
-    },
-    week_III: {
-        "manila": {
-            "distance": {"total": 303180, "avgByAthlete": 27561.81818181818},
-            "elevation": {"total": 4197, "avgByAthlete": 381.54545454545456},
-            "time": {"total": 134763.2, "avgByAthlete": 12251.2},
-            "pace": {"avgByAthlete": 0.4444989775051125, "total": 0.4444989775051125}
-        },
-        "zurich": {
-            "distance": {"total": 217150, "avgByAthlete": 19740.909090909092},
-            "elevation": {"total": 3898, "avgByAthlete": 354.3636363636364},
-            "time": {"total": 76535.79999999999, "avgByAthlete": 6957.799999999999},
-            "pace": {"avgByAthlete": 0.3524559060557218, "total": 0.3524559060557218}
-        },
-        "edinburgh": {
-            "distance": {"total": 176500, "avgByAthlete": 35300},
-            "elevation": {"total": 1662, "avgByAthlete": 332.4},
-            "time": {"total": 59183.09999999999, "avgByAthlete": 11836.619999999999},
-            "pace": {"avgByAthlete": 0.3353150141643059, "total": 0.3353150141643059}
-        },
-        "lugano": {
-            "distance": {"total": 134380, "avgByAthlete": 33595},
-            "elevation": {"total": 1374, "avgByAthlete": 343.5},
-            "time": {"total": 44457.6, "avgByAthlete": 11114.4},
-            "pace": {"avgByAthlete": 0.33083494567643995, "total": 0.33083494567643995}
-        },
-        "madrid": {
-            "distance": {"total": 0, "avgByAthlete": 0},
-            "elevation": {"total": 0, "avgByAthlete": 0},
-            "time": {"total": 0, "avgByAthlete": 0},
-            "pace": {"avgByAthlete": 0, "total": 0}
-        }
-    }
-};
 
 const initialValues = {
     "manila": {
-        "distance": {"total": 502680, "avgByAthlete": 41890},
-        "elevation": {"total": 6616, "avgByAthlete": 551.3333333333334},
-        "time": {"total": 217934.80000000002, "avgByAthlete": 18161.233333333334},
-        "pace": {"avgByAthlete": 0.43354579454125886, "total": 0.4335457945412589}
+        "distance": {"total": 0, "avgByAthlete": 0},
+        "elevation": {"total": 0, "avgByAthlete": 0},
+        "time": {"total": 0, "avgByAthlete": 0},
+        "pace": {"avgByAthlete": 0, "total": 0}
     },
     "zurich": {
-        "distance": {"total": 273550, "avgByAthlete": 22795.833333333332},
-        "elevation": {"total": 4430, "avgByAthlete": 369.1666666666667},
-        "time": {"total": 95779.49999999999, "avgByAthlete": 7981.624999999999},
-        "pace": {"avgByAthlete": 0.3501352586364467, "total": 0.3501352586364467}
+        "distance": {"total": 0, "avgByAthlete": 0},
+        "elevation": {"total": 0, "avgByAthlete": 0},
+        "time": {"total": 0, "avgByAthlete": 0},
+        "pace": {"avgByAthlete": 0, "total": 0}
     },
     "edinburgh": {
-        "distance": {"total": 275500, "avgByAthlete": 55100},
-        "elevation": {"total": 1958, "avgByAthlete": 391.6},
-        "time": {"total": 92877.29999999999, "avgByAthlete": 18575.46},
-        "pace": {"avgByAthlete": 0.33712268602540835, "total": 0.3371226860254083}
+        "distance": {"total": 0, "avgByAthlete": 0},
+        "elevation": {"total": 0, "avgByAthlete": 0},
+        "time": {"total": 0, "avgByAthlete": 0},
+        "pace": {"avgByAthlete": 0, "total": 0}
     },
     "lugano": {
-        "distance": {"total": 208580, "avgByAthlete": 52145},
-        "elevation": {"total": 2270, "avgByAthlete": 567.5},
-        "time": {"total": 69080.6, "avgByAthlete": 17270.15},
-        "pace": {"avgByAthlete": 0.3311947454214211, "total": 0.3311947454214211}
+        "distance": {"total": 0, "avgByAthlete": 0},
+        "elevation": {"total": 0, "avgByAthlete": 0},
+        "time": {"total": 0, "avgByAthlete": 0},
+        "pace": {"avgByAthlete": 0, "total": 0}
     },
     "madrid": {
         "distance": {"total": 0, "avgByAthlete": 0},
@@ -246,9 +84,9 @@ const initialValues = {
     }
 };
 
-groupAndAnaliseData(teams);
+groupAndAnaliseData(runners);
 
-function groupAndAnaliseData(teams) {
+function groupAndAnaliseData(runners) {
     const athletesRanking = document.querySelectorAll('.leaderboard table tbody tr');
     const leadersRankingTableByTeam = document.querySelector('.leaders table');
     if (!leadersRankingTableByTeam) {
@@ -291,6 +129,13 @@ function groupAndAnaliseData(teams) {
         const rows = [];
         let totalAthletes = 0;
         let totalAthletesThatRan = 0;
+        for (const runnerId in runners) {
+            const team = runners[runnerId].team;
+            if(!teams[team]){
+                teams[team] = [];
+            }
+            teams[team].push(runners[runnerId].name);
+        }
         for (const team in teams) {
             const teamName = createElement('td', {}, team);
             const athletesInTeamLength = teams[team].length;
@@ -302,15 +147,10 @@ function groupAndAnaliseData(teams) {
 
             const athletesCell = createElement('td', {'style': 'text-align: center'}, athletesInTeamLength);
 
-            let list = '';
-            for (let i = 0; i < athletesInTeamLength; i++) {
-                const name = teams[team][i].name;
-                list += name ? name + ', ' : '';
-            }
-            list = list.slice(0, -2);
+            const list = teams[team].join(', ');
             const athletesNameCell = createElement('td', {}, list);
             const runnersLength = athletesThatHaveRanByTeam[team] || 0;
-            const percentage = runnersLength ? (runnersLength*100/athletesInTeamLength).toFixed(2) : 0;
+            const percentage = runnersLength ? (runnersLength * 100 / athletesInTeamLength).toFixed(2) : 0;
             const athletesThatHaveRan = createElement('td', {'style': 'text-align: center'}, runnersLength + ' (' + percentage + '%)');
             totalAthletesThatRan += runnersLength;
 
@@ -318,7 +158,7 @@ function groupAndAnaliseData(teams) {
         }
         const totalsCell = createElement('td', {'style': 'font-weight: bold'}, 'Totals');
         const athletesTotalsCell = createElement('td', {'style': 'text-align: center'}, totalAthletes);
-        const emtpyCell= createElement('td', {}, '');
+        const emtpyCell = createElement('td', {}, '');
         const athletesTotalsThatRanCell = createElement('td', {'style': 'text-align: center'}, totalAthletesThatRan);
         rows.push(createElement('tr', {}, [totalsCell, athletesTotalsCell, emtpyCell, athletesTotalsThatRanCell]));
 
@@ -449,8 +289,8 @@ function groupAndAnaliseData(teams) {
             if (!cells[1]) {
                 return;
             }
-            const athlete = cells[1].querySelector('a').getAttribute('href');
-            const team = getTeamForUser(athlete);
+            const runnerId = cells[1].querySelector('a').getAttribute('href').replace('/athletes/', '');
+            const team = runners[runnerId].team;
             const realDistance = parseFloat(cells[2].textContent.trim().replace(',', '.')) || 0; // in km
             const distance = realDistance * 1000; // in meters
             const runs = parseFloat(cells[3].textContent.trim().replace(',', '.')) || 0;
@@ -462,10 +302,12 @@ function groupAndAnaliseData(teams) {
 
             const elevation = parseFloat(cells[6].textContent.trim().replace('.', '')) || 0;
 
-            resultsByAthlete[athlete] = {distance, runs, longest, avgPace, elevation, time};
+            resultsByAthlete[runnerId] = {distance, runs, longest, avgPace, elevation, time};
 
             addToTeam(team, {distance, elevation, time});
         });
+
+        console.log(teams)
 
         for (const team in ranking) {
             const teamLength = teams[team].length;
@@ -483,7 +325,7 @@ function groupAndAnaliseData(teams) {
         }
 
         for (const team in ranking) {
-            if(!ranking[team].distance.total){
+            if (!ranking[team].distance.total) {
                 delete ranking[team];
             }
         }
@@ -503,22 +345,6 @@ function groupAndAnaliseData(teams) {
             ranking[team].elevation.total += data.elevation;
             ranking[team].time.total += data.time;
 
-        }
-    }
-
-    function getTeamForUser(athlete) {
-        for (const team in teams) {
-            let isInTeam = false;
-            const teamLength = teams[team].length;
-            for (let i = 0; i < teamLength; i++) {
-                if ((teams[team][i].url && teams[team][i].url === athlete) || teams[team][i] === athlete) {
-                    isInTeam = true;
-                    break
-                }
-            }
-            if (isInTeam) {
-                return team;
-            }
         }
     }
 
