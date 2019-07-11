@@ -39,7 +39,8 @@ const runners = {
     43945001: {name: "Giuliano Paris", team: 'lugano'},
     18897560: {name: "Artyom Romanov", team: 'zurich'},
     44057878: {name: "Becky Pitts", team: 'london'},
-    15297420: {name: "Yevgeniy Ilyin", team: 'zurich'}
+    15297420: {name: "Yevgeniy Ilyin", team: 'zurich'},
+    18177642: {name: "Dennis Piovesana", team: 'lugano'}
 };
 const teams = {};
 
@@ -282,7 +283,8 @@ function groupAndAnaliseData(runners) {
 
     function getRanking() {
 //        const ranking = Object.assign({}, initial.first);
-        const ranking = Object.assign({}, initialValues);
+//         const ranking = Object.assign({}, initialValues);
+        const ranking = {};
 
         athletesRanking.forEach((item) => {
             const cells = item.querySelectorAll('td');

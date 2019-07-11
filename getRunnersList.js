@@ -1,4 +1,4 @@
-const originalList = {
+const runners = {
     29041600: {name: "Jorge Rumoroso", team: 'zurich'},
     23067415: {name: "Anca-Elena Alexandrescu", team: 'zurich'},
     6228065: {name: "Andrei C", team: 'zurich'},
@@ -39,38 +39,39 @@ const originalList = {
     43945001: {name: "Giuliano Paris", team: 'lugano'},
     18897560: {name: "Artyom Romanov", team: 'zurich'},
     44057878: {name: "Becky Pitts", team: 'london'},
-    15297420: {name: "Yevgeniy Ilyin", team: 'zurich'}
+    15297420: {name: "Yevgeniy Ilyin", team: 'zurich'},
+    18177642: {name: "Dennis Piovesana", team: 'lugano'}
 };
 
 const createEventButton = document.querySelector('#club-event-js');
-let runners;
+let runnersList;
 let runnersNotIdentified;
 
 createEventButton.click();
 setTimeout(() => {
     const eventModal = document.querySelector('.lightbox.event-modal');
     const organizer = eventModal.querySelector('#athlete_id').parentElement;
-    const runnersList = getRunnersList(organizer.querySelectorAll('li'));
-    runners = runnersList.runners;
-    runnersNotIdentified = runnersList.runnersNotIdentified;
-    console.log(runners);
+    const runnersListItems = getRunnersList(organizer.querySelectorAll('li'));
+    runnersList = runnersListItems.runners;
+    runnersNotIdentified = runnersListItems.runnersNotIdentified;
+    console.log(runnersList);
     console.log(runnersNotIdentified);
 }, 1000);
 
 function getRunnersList(list) {
-    const runners = {};
+    const runnersIdentified = {};
     const runnersNotIdentified = {};
     list.forEach((item) => {
             const userId = item.getAttribute('data-value');
             if (userId) {
                 const name = item.textContent.trim();
-                if (originalList[userId]) {
-                    runners[userId] = {name}
+                if (runners[userId]) {
+                    runnersIdentified[userId] = {name}
                 } else {
                     runnersNotIdentified[userId] = {name}
                 }
             }
         }
     );
-    return {runners, runnersNotIdentified};
+    return {runners: runnersIdentified, runnersNotIdentified};
 }

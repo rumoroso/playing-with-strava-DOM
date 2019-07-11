@@ -2,7 +2,7 @@
 
     console.log(runnersThatHaveRan());
     function runnersThatHaveRan(){
-        const rows = document.querySelectorAll('.leaderboard table tbody tr');
+        const rows = document.querySelectorAll('#jarl tbody tr');
         const athletes = [];
         for (let i = 0; i < rows.length; i++) {
             const ath = rows[i].querySelector('.athlete-name.minimal');
@@ -15,7 +15,7 @@
         const runnersThatHaveRanByTeam = {};
 
         for (let i = 0; i < athletes.length; i++) {
-            const team = runners[athletes[i]].team;
+            const team = runnersList[athletes[i]].team;
 
             if (!runnersThatHaveRanByTeam[team]) {
                 runnersThatHaveRanByTeam[team] = 0;
@@ -28,107 +28,31 @@
     }
 </script>
 
+<div id="jarl">
 
 <table class="dense striped sortable">
     <thead>
     <tr>
-        <th class="nosort">Clasificación</th>
-        <th class="nosort">Atleta</th>
+        <th class="nosort">Rank</th>
+        <th class="nosort">Athlete</th>
         <th class="distance active desc" data-dimension="distance">
-            <span class="button">Distancia</span>
+            <span class="button">Distance</span>
         </th>
-        <th class="nosort">Carreras</th>
+        <th class="nosort">Runs</th>
         <th class="longest_activity_distance" data-dimension="longest_activity_distance">
-            <span class="button">Más largo</span>
+            <span class="button">Longest</span>
         </th>
         <th class="velocity" data-dimension="velocity">
-            <span class="button">Ritmo promedio</span>
+            <span class="button">Avg. Pace</span>
         </th>
         <th class="elev_gain" data-dimension="elev_gain">
-            <span class="button">Desnivel positivo</span>
+            <span class="button">Elev. Gain</span>
         </th>
     </tr>
     </thead>
-    <tbody><tr>
+    <tbody>
+    <tr>
         <td class="rank">1</td>
-        <td class="athlete">
-            <div class="avatar avatar-athlete avatar-sm">
-                <a class="avatar-content" href="/athletes/16500041">
-                    <div class="avatar-img-wrapper avatar-default">
-
-                        <img alt="Jerome Sevilla" src="https://dgalywyr863hv.cloudfront.net/pictures/athletes/16500041/8580589/1/large.jpg" title="Jerome Sevilla">
-                    </div>
-                </a>
-            </div>
-            <a class="athlete-name minimal" href="/athletes/16500041">
-                Jerome Sevilla
-            </a>
-        </td>
-        <td class="distance highlighted-column" title="155.3mi">25,0 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">2</td>
-        <td class="longest-activity">
-            <a class="minimal" href="/activities/2517179980" title="93.8mi">
-                15,1 <abbr class="unit short once-only">km</abbr>
-            </a>
-        </td>
-        <td class="average-pace" title="10:53/mi — 8.9km/h — 5.5mi/h">6:46 <abbr class="unit short once-only">/km</abbr></td>
-        <td class="elev-gain" title="1,467ft">447 <abbr class="unit short once-only">m</abbr></td>
-    </tr><tr>
-        <td class="rank">2</td>
-        <td class="athlete">
-            <div class="avatar avatar-athlete avatar-sm">
-                <a class="avatar-content" href="/athletes/15297420">
-                    <div class="avatar-img-wrapper avatar-default">
-
-                        <div class="avatar-badge">
-<span class="app-icon-wrapper">
-<span class="app-icon icon-badge-premium"></span>
-</span>
-                        </div>
-
-                        <img alt="Yevgeniy Ilyin" src="https://dgalywyr863hv.cloudfront.net/pictures/athletes/15297420/4597703/1/large.jpg" title="Yevgeniy Ilyin">
-                    </div>
-                </a>
-            </div>
-            <a class="athlete-name minimal" href="/athletes/15297420">
-                Yevgeniy Ilyin
-            </a>
-        </td>
-        <td class="distance highlighted-column" title="152.9mi">24,6 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">3</td>
-        <td class="longest-activity">
-            <a class="minimal" href="/activities/2518019449" title="78.9mi">
-                12,7 <abbr class="unit short once-only">km</abbr>
-            </a>
-        </td>
-        <td class="average-pace" title="9:41/mi — 10.0km/h — 6.2mi/h">6:01 <abbr class="unit short once-only">/km</abbr></td>
-        <td class="elev-gain" title="2,625ft">800 <abbr class="unit short once-only">m</abbr></td>
-    </tr><tr>
-        <td class="rank">3</td>
-        <td class="athlete">
-            <div class="avatar avatar-athlete avatar-sm">
-                <a class="avatar-content" href="/athletes/43945001">
-                    <div class="avatar-img-wrapper avatar-default">
-
-                        <img alt="Giuliano Paris" src="//d3nn82uaxijpm6.cloudfront.net/assets/avatar/athlete/large-e1af16a1979fcd1d65bfb0208e8ed84b6dde3270566e911582f54ef6d9392d59.png" title="Giuliano Paris">
-                    </div>
-                </a>
-            </div>
-            <a class="athlete-name minimal" href="/athletes/43945001">
-                Giuliano Paris
-            </a>
-        </td>
-        <td class="distance highlighted-column" title="151.6mi">24,4 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">2</td>
-        <td class="longest-activity">
-            <a class="minimal" href="/activities/2513709659" title="76.4mi">
-                12,3 <abbr class="unit short once-only">km</abbr>
-            </a>
-        </td>
-        <td class="average-pace" title="9:14/mi — 10.5km/h — 6.5mi/h">5:44 <abbr class="unit short once-only">/km</abbr></td>
-        <td class="elev-gain" title="581ft">177 <abbr class="unit short once-only">m</abbr></td>
-    </tr><tr>
-        <td class="rank">4</td>
         <td class="athlete">
             <div class="avatar avatar-athlete avatar-sm">
                 <a class="avatar-content" href="/athletes/16031782">
@@ -148,17 +72,17 @@
                 John Clark
             </a>
         </td>
-        <td class="distance highlighted-column" title="100.0mi">16,1 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">1</td>
+        <td class="distance highlighted-column">70.5 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">9</td>
         <td class="longest-activity">
-            <a class="minimal" href="/activities/2518372927" title="100.0mi">
-                16,1 <abbr class="unit short once-only">km</abbr>
+            <a class="minimal" href="/activities/2511980637">
+                13.3 <abbr class="unit short" title="kilometers">km</abbr>
             </a>
         </td>
-        <td class="average-pace" title="8:32/mi — 11.3km/h — 7.0mi/h">5:18 <abbr class="unit short once-only">/km</abbr></td>
-        <td class="elev-gain" title="814ft">248 <abbr class="unit short once-only">m</abbr></td>
+        <td class="average-pace">7:01 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">851 <abbr class="unit short" title="meters">m</abbr></td>
     </tr><tr class="you">
-        <td class="rank">5</td>
+        <td class="rank">2</td>
         <td class="athlete">
             <div class="avatar avatar-athlete avatar-sm">
                 <a class="avatar-content" href="/athletes/29041600">
@@ -172,89 +96,47 @@
                 Jorge Rumoroso
             </a>
         </td>
-        <td class="distance highlighted-column" title="69.6mi">11,2 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">1</td>
+        <td class="distance highlighted-column">54.2 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">4</td>
         <td class="longest-activity">
-            <a class="minimal" href="/activities/2518133895" title="69.6mi">
-                11,2 <abbr class="unit short once-only">km</abbr>
+            <a class="minimal" href="/activities/2511073935">
+                16.6 <abbr class="unit short" title="kilometers">km</abbr>
             </a>
         </td>
-        <td class="average-pace" title="8:32/mi — 11.3km/h — 7.0mi/h">5:18 <abbr class="unit short once-only">/km</abbr></td>
-        <td class="elev-gain" title="135ft">41 <abbr class="unit short once-only">m</abbr></td>
+        <td class="average-pace">6:12 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">880 <abbr class="unit short" title="meters">m</abbr></td>
     </tr><tr>
-        <td class="rank">6</td>
+        <td class="rank">3</td>
         <td class="athlete">
             <div class="avatar avatar-athlete avatar-sm">
-                <a class="avatar-content" href="/athletes/25044835">
+                <a class="avatar-content" href="/athletes/15297420">
                     <div class="avatar-img-wrapper avatar-default">
 
-                        <img alt="Emanuele Della Valle" src="//d3nn82uaxijpm6.cloudfront.net/assets/avatar/athlete/large-e1af16a1979fcd1d65bfb0208e8ed84b6dde3270566e911582f54ef6d9392d59.png" title="Emanuele Della Valle">
+                        <div class="avatar-badge">
+<span class="app-icon-wrapper">
+<span class="app-icon icon-badge-premium"></span>
+</span>
+                        </div>
+
+                        <img alt="Yevgeniy Ilyin" src="https://dgalywyr863hv.cloudfront.net/pictures/athletes/15297420/4597703/1/large.jpg" title="Yevgeniy Ilyin">
                     </div>
                 </a>
             </div>
-            <a class="athlete-name minimal" href="/athletes/25044835">
-                Emanuele Della Valle
+            <a class="athlete-name minimal" href="/athletes/15297420">
+                Yevgeniy Ilyin
             </a>
         </td>
-        <td class="distance highlighted-column" title="62.1mi">10,0 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">1</td>
+        <td class="distance highlighted-column">48.6 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">6</td>
         <td class="longest-activity">
-            <a class="minimal" href="/activities/2514301277" title="62.1mi">
-                10,0 <abbr class="unit short once-only">km</abbr>
+            <a class="minimal" href="/activities/2505730903">
+                14.5 <abbr class="unit short" title="kilometers">km</abbr>
             </a>
         </td>
-        <td class="average-pace" title="8:43/mi — 11.1km/h — 6.9mi/h">5:25 <abbr class="unit short once-only">/km</abbr></td>
-        <td class="elev-gain">--</td>
+        <td class="average-pace">4:33 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">342 <abbr class="unit short" title="meters">m</abbr></td>
     </tr><tr>
-        <td class="rank">7</td>
-        <td class="athlete">
-            <div class="avatar avatar-athlete avatar-sm">
-                <a class="avatar-content" href="/athletes/5027913">
-                    <div class="avatar-img-wrapper avatar-default">
-
-                        <img alt="Riccardo Burgaletta" src="https://graph.facebook.com/1272664946/picture?height=256&amp;width=256" title="Riccardo Burgaletta">
-                    </div>
-                </a>
-            </div>
-            <a class="athlete-name minimal" href="/athletes/5027913">
-                Riccardo Burgaletta
-            </a>
-        </td>
-        <td class="distance highlighted-column" title="55.9mi">9,0 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">1</td>
-        <td class="longest-activity">
-            <a class="minimal" href="/activities/2515637175" title="55.9mi">
-                9,0 <abbr class="unit short once-only">km</abbr>
-            </a>
-        </td>
-        <td class="average-pace" title="8:33/mi — 11.3km/h — 7.0mi/h">5:19 <abbr class="unit short once-only">/km</abbr></td>
-        <td class="elev-gain" title="171ft">52 <abbr class="unit short once-only">m</abbr></td>
-    </tr><tr>
-        <td class="rank">8</td>
-        <td class="athlete">
-            <div class="avatar avatar-athlete avatar-sm">
-                <a class="avatar-content" href="/athletes/29177863">
-                    <div class="avatar-img-wrapper avatar-default">
-
-                        <img alt="Ezani Schultheiss" src="https://lh5.googleusercontent.com/-DBd0i9MQlv8/AAAAAAAAAAI/AAAAAAAAAAA/AKxrwcaXqXRnpmnJkBf06zuIXaO_SOZE5w/mo/photo.jpg" title="Ezani Schultheiss">
-                    </div>
-                </a>
-            </div>
-            <a class="athlete-name minimal" href="/athletes/29177863">
-                Ezani Schultheiss
-            </a>
-        </td>
-        <td class="distance highlighted-column" title="54.7mi">8,8 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">1</td>
-        <td class="longest-activity">
-            <a class="minimal" href="/activities/2516587924" title="54.7mi">
-                8,8 <abbr class="unit short once-only">km</abbr>
-            </a>
-        </td>
-        <td class="average-pace" title="10:07/mi — 9.5km/h — 5.9mi/h">6:17 <abbr class="unit short once-only">/km</abbr></td>
-        <td class="elev-gain" title="1,276ft">389 <abbr class="unit short once-only">m</abbr></td>
-    </tr><tr>
-        <td class="rank">9</td>
+        <td class="rank">4</td>
         <td class="athlete">
             <div class="avatar avatar-athlete avatar-sm">
                 <a class="avatar-content" href="/athletes/18897560">
@@ -274,41 +156,17 @@
                 Artyom Romanov
             </a>
         </td>
-        <td class="distance highlighted-column" title="53.4mi">8,6 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">1</td>
+        <td class="distance highlighted-column">36.7 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">3</td>
         <td class="longest-activity">
-            <a class="minimal" href="/activities/2514287051" title="53.4mi">
-                8,6 <abbr class="unit short once-only">km</abbr>
+            <a class="minimal" href="/activities/2512738203">
+                15.1 <abbr class="unit short" title="kilometers">km</abbr>
             </a>
         </td>
-        <td class="average-pace" title="8:24/mi — 11.5km/h — 7.1mi/h">5:13 <abbr class="unit short once-only">/km</abbr></td>
-        <td class="elev-gain" title="128ft">39 <abbr class="unit short once-only">m</abbr></td>
+        <td class="average-pace">4:57 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">142 <abbr class="unit short" title="meters">m</abbr></td>
     </tr><tr>
-        <td class="rank">10</td>
-        <td class="athlete">
-            <div class="avatar avatar-athlete avatar-sm">
-                <a class="avatar-content" href="/athletes/5690359">
-                    <div class="avatar-img-wrapper avatar-default">
-
-                        <img alt="Michele  Sasso" src="//d3nn82uaxijpm6.cloudfront.net/assets/avatar/athlete/large-e1af16a1979fcd1d65bfb0208e8ed84b6dde3270566e911582f54ef6d9392d59.png" title="Michele  Sasso">
-                    </div>
-                </a>
-            </div>
-            <a class="athlete-name minimal" href="/athletes/5690359">
-                Michele  Sasso
-            </a>
-        </td>
-        <td class="distance highlighted-column" title="43.5mi">7,0 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">1</td>
-        <td class="longest-activity">
-            <a class="minimal" href="/activities/2517068241" title="43.5mi">
-                7,0 <abbr class="unit short once-only">km</abbr>
-            </a>
-        </td>
-        <td class="average-pace" title="8:22/mi — 11.5km/h — 7.2mi/h">5:12 <abbr class="unit short once-only">/km</abbr></td>
-        <td class="elev-gain" title="476ft">145 <abbr class="unit short once-only">m</abbr></td>
-    </tr><tr>
-        <td class="rank">11</td>
+        <td class="rank">5</td>
         <td class="athlete">
             <div class="avatar avatar-athlete avatar-sm">
                 <a class="avatar-content" href="/athletes/43010190">
@@ -322,89 +180,215 @@
                 Renz Estacio
             </a>
         </td>
-        <td class="distance highlighted-column" title="42.3mi">6,8 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">1</td>
+        <td class="distance highlighted-column">28.8 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">5</td>
         <td class="longest-activity">
-            <a class="minimal" href="/activities/2517137648" title="42.3mi">
-                6,8 <abbr class="unit short once-only">km</abbr>
+            <a class="minimal" href="/activities/2510299350">
+                10.1 <abbr class="unit short" title="kilometers">km</abbr>
             </a>
         </td>
-        <td class="average-pace" title="13:10/mi — 7.3km/h — 4.6mi/h">8:11 <abbr class="unit short once-only">/km</abbr></td>
-        <td class="elev-gain" title="1,457ft">444 <abbr class="unit short once-only">m</abbr></td>
+        <td class="average-pace">9:07 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">1,255 <abbr class="unit short" title="meters">m</abbr></td>
     </tr><tr>
-        <td class="rank">12</td>
+        <td class="rank">6</td>
+        <td class="athlete">
+            <div class="avatar avatar-athlete avatar-sm">
+                <a class="avatar-content" href="/athletes/16500041">
+                    <div class="avatar-img-wrapper avatar-default">
+
+                        <img alt="Jerome Sevilla" src="https://dgalywyr863hv.cloudfront.net/pictures/athletes/16500041/8580589/1/large.jpg" title="Jerome Sevilla">
+                    </div>
+                </a>
+            </div>
+            <a class="athlete-name minimal" href="/athletes/16500041">
+                Jerome Sevilla
+            </a>
+        </td>
+        <td class="distance highlighted-column">25.2 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">7</td>
+        <td class="longest-activity">
+            <a class="minimal" href="/activities/2500526028">
+                5.5 <abbr class="unit short" title="kilometers">km</abbr>
+            </a>
+        </td>
+        <td class="average-pace">6:30 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">464 <abbr class="unit short" title="meters">m</abbr></td>
+    </tr><tr>
+        <td class="rank">7</td>
+        <td class="athlete">
+            <div class="avatar avatar-athlete avatar-sm">
+                <a class="avatar-content" href="/athletes/5690359">
+                    <div class="avatar-img-wrapper avatar-default">
+
+                        <img alt="Michele  Sasso" src="//d3nn82uaxijpm6.cloudfront.net/assets/avatar/athlete/large-e1af16a1979fcd1d65bfb0208e8ed84b6dde3270566e911582f54ef6d9392d59.png" title="Michele  Sasso">
+                    </div>
+                </a>
+            </div>
+            <a class="athlete-name minimal" href="/athletes/5690359">
+                Michele  Sasso
+            </a>
+        </td>
+        <td class="distance highlighted-column">24.2 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">2</td>
+        <td class="longest-activity">
+            <a class="minimal" href="/activities/2510656756">
+                17.3 <abbr class="unit short" title="kilometers">km</abbr>
+            </a>
+        </td>
+        <td class="average-pace">5:04 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">256 <abbr class="unit short" title="meters">m</abbr></td>
+    </tr><tr>
+        <td class="rank">8</td>
         <td class="athlete">
             <div class="avatar avatar-athlete avatar-sm">
                 <a class="avatar-content" href="/athletes/14570654">
                     <div class="avatar-img-wrapper avatar-default">
 
-                        <img alt="nathan quadrio" src="https://dgalywyr863hv.cloudfront.net/pictures/athletes/14570654/4312282/1/large.jpg" title="nathan quadrio">
+                        <img alt="Nathan Quadrio" src="https://dgalywyr863hv.cloudfront.net/pictures/athletes/14570654/4312282/3/large.jpg" title="Nathan Quadrio">
                     </div>
                 </a>
             </div>
             <a class="athlete-name minimal" href="/athletes/14570654">
-                nathan quadrio
+                Nathan Quadrio
             </a>
         </td>
-        <td class="distance highlighted-column" title="37.9mi">6,1 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">1</td>
+        <td class="distance highlighted-column">23.9 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">3</td>
         <td class="longest-activity">
-            <a class="minimal" href="/activities/2518106336" title="37.9mi">
-                6,1 <abbr class="unit short once-only">km</abbr>
+            <a class="minimal" href="/activities/2494315500">
+                9.9 <abbr class="unit short" title="kilometers">km</abbr>
             </a>
         </td>
-        <td class="average-pace" title="8:03/mi — 12.0km/h — 7.5mi/h">5:00 <abbr class="unit short once-only">/km</abbr></td>
-        <td class="elev-gain" title="102ft">31 <abbr class="unit short once-only">m</abbr></td>
+        <td class="average-pace">5:21 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">106 <abbr class="unit short" title="meters">m</abbr></td>
+    </tr><tr>
+        <td class="rank">9</td>
+        <td class="athlete">
+            <div class="avatar avatar-athlete avatar-sm">
+                <a class="avatar-content" href="/athletes/43945001">
+                    <div class="avatar-img-wrapper avatar-default">
+
+                        <img alt="Giuliano Paris" src="//d3nn82uaxijpm6.cloudfront.net/assets/avatar/athlete/large-e1af16a1979fcd1d65bfb0208e8ed84b6dde3270566e911582f54ef6d9392d59.png" title="Giuliano Paris">
+                    </div>
+                </a>
+            </div>
+            <a class="athlete-name minimal" href="/athletes/43945001">
+                Giuliano Paris
+            </a>
+        </td>
+        <td class="distance highlighted-column">22.1 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">2</td>
+        <td class="longest-activity">
+            <a class="minimal" href="/activities/2507773255">
+                12.1 <abbr class="unit short" title="kilometers">km</abbr>
+            </a>
+        </td>
+        <td class="average-pace">5:11 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">168 <abbr class="unit short" title="meters">m</abbr></td>
+    </tr><tr>
+        <td class="rank">10</td>
+        <td class="athlete">
+            <div class="avatar avatar-athlete avatar-sm">
+                <a class="avatar-content" href="/athletes/25044835">
+                    <div class="avatar-img-wrapper avatar-default">
+
+                        <img alt="Emanuele Della Valle" src="//d3nn82uaxijpm6.cloudfront.net/assets/avatar/athlete/large-e1af16a1979fcd1d65bfb0208e8ed84b6dde3270566e911582f54ef6d9392d59.png" title="Emanuele Della Valle">
+                    </div>
+                </a>
+            </div>
+            <a class="athlete-name minimal" href="/athletes/25044835">
+                Emanuele Della Valle
+            </a>
+        </td>
+        <td class="distance highlighted-column">21.7 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">3</td>
+        <td class="longest-activity">
+            <a class="minimal" href="/activities/2494920810">
+                8.5 <abbr class="unit short" title="kilometers">km</abbr>
+            </a>
+        </td>
+        <td class="average-pace">5:19 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">71 <abbr class="unit short" title="meters">m</abbr></td>
+    </tr><tr>
+        <td class="rank">11</td>
+        <td class="athlete">
+            <div class="avatar avatar-athlete avatar-sm">
+                <a class="avatar-content" href="/athletes/42949260">
+                    <div class="avatar-img-wrapper avatar-default">
+
+                        <img alt="Pirmin Zenklusen" src="https://dgalywyr863hv.cloudfront.net/pictures/athletes/42949260/12244180/1/large.jpg" title="Pirmin Zenklusen">
+                    </div>
+                </a>
+            </div>
+            <a class="athlete-name minimal" href="/athletes/42949260">
+                Pirmin Zenklusen
+            </a>
+        </td>
+        <td class="distance highlighted-column">20.1 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">3</td>
+        <td class="longest-activity">
+            <a class="minimal" href="/activities/2495523487">
+                8.5 <abbr class="unit short" title="kilometers">km</abbr>
+            </a>
+        </td>
+        <td class="average-pace">5:02 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">227 <abbr class="unit short" title="meters">m</abbr></td>
+    </tr><tr>
+        <td class="rank">12</td>
+        <td class="athlete">
+            <div class="avatar avatar-athlete avatar-sm">
+                <a class="avatar-content" href="/athletes/5027913">
+                    <div class="avatar-img-wrapper avatar-default">
+
+                        <img alt="Riccardo Burgaletta" src="https://graph.facebook.com/1272664946/picture?height=256&amp;width=256" title="Riccardo Burgaletta">
+                    </div>
+                </a>
+            </div>
+            <a class="athlete-name minimal" href="/athletes/5027913">
+                Riccardo Burgaletta
+            </a>
+        </td>
+        <td class="distance highlighted-column">18.8 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">2</td>
+        <td class="longest-activity">
+            <a class="minimal" href="/activities/2513377798">
+                10.0 <abbr class="unit short" title="kilometers">km</abbr>
+            </a>
+        </td>
+        <td class="average-pace">10:17 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">1,330 <abbr class="unit short" title="meters">m</abbr></td>
     </tr><tr>
         <td class="rank">13</td>
         <td class="athlete">
             <div class="avatar avatar-athlete avatar-sm">
-                <a class="avatar-content" href="/athletes/41904167">
+                <a class="avatar-content" href="/athletes/13629176">
                     <div class="avatar-img-wrapper avatar-default">
 
-                        <img alt="Kevin Francisco" src="https://lh6.googleusercontent.com/-APgtrS8JKlI/AAAAAAAAAAI/AAAAAAAAAFw/Wkg0-Wd-IuY/photo.jpg" title="Kevin Francisco">
+                        <div class="avatar-badge">
+<span class="app-icon-wrapper">
+<span class="app-icon icon-badge-premium"></span>
+</span>
+                        </div>
+
+                        <img alt="Adamo Maddalena" src="https://dgalywyr863hv.cloudfront.net/pictures/athletes/13629176/7673195/1/large.jpg" title="Adamo Maddalena">
                     </div>
                 </a>
             </div>
-            <a class="athlete-name minimal" href="/athletes/41904167">
-                Kevin Francisco
+            <a class="athlete-name minimal" href="/athletes/13629176">
+                Adamo Maddalena
             </a>
         </td>
-        <td class="distance highlighted-column" title="33.6mi">5,4 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">1</td>
+        <td class="distance highlighted-column">17.8 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">2</td>
         <td class="longest-activity">
-            <a class="minimal" href="/activities/2514403261" title="33.6mi">
-                5,4 <abbr class="unit short once-only">km</abbr>
+            <a class="minimal" href="/activities/2511552647">
+                10.0 <abbr class="unit short" title="kilometers">km</abbr>
             </a>
         </td>
-        <td class="average-pace" title="9:51/mi — 9.8km/h — 6.1mi/h">6:07 <abbr class="unit short once-only">/km</abbr></td>
-        <td class="elev-gain">--</td>
+        <td class="average-pace">5:32 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">82 <abbr class="unit short" title="meters">m</abbr></td>
     </tr><tr>
         <td class="rank">14</td>
-        <td class="athlete">
-            <div class="avatar avatar-athlete avatar-sm">
-                <a class="avatar-content" href="/athletes/43451716">
-                    <div class="avatar-img-wrapper avatar-default">
-
-                        <img alt="Michael Christian Torres" src="//d3nn82uaxijpm6.cloudfront.net/assets/avatar/athlete/large-e1af16a1979fcd1d65bfb0208e8ed84b6dde3270566e911582f54ef6d9392d59.png" title="Michael Christian Torres">
-                    </div>
-                </a>
-            </div>
-            <a class="athlete-name minimal" href="/athletes/43451716">
-                Michael Christian Torres
-            </a>
-        </td>
-        <td class="distance highlighted-column" title="31.1mi">5,0 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">1</td>
-        <td class="longest-activity">
-            <a class="minimal" href="/activities/2517178786" title="31.1mi">
-                5,0 <abbr class="unit short once-only">km</abbr>
-            </a>
-        </td>
-        <td class="average-pace" title="8:27/mi — 11.4km/h — 7.1mi/h">5:15 <abbr class="unit short once-only">/km</abbr></td>
-        <td class="elev-gain" title="1,099ft">335 <abbr class="unit short once-only">m</abbr></td>
-    </tr><tr>
-        <td class="rank">15</td>
         <td class="athlete">
             <div class="avatar avatar-athlete avatar-sm">
                 <a class="avatar-content" href="/athletes/18519747">
@@ -418,14 +402,160 @@
                 Bryan Flores
             </a>
         </td>
-        <td class="distance highlighted-column" title="26.1mi">4,2 <abbr class="unit short once-only">km</abbr></td>
-        <td class="num-activities">1</td>
+        <td class="distance highlighted-column">16.4 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">3</td>
         <td class="longest-activity">
-            <a class="minimal" href="/activities/2515846864" title="26.1mi">
-                4,2 <abbr class="unit short once-only">km</abbr>
+            <a class="minimal" href="/activities/2510173844">
+                8.3 <abbr class="unit short" title="kilometers">km</abbr>
             </a>
         </td>
-        <td class="average-pace" title="11:26/mi — 8.5km/h — 5.3mi/h">7:06 <abbr class="unit short once-only">/km</abbr></td>
+        <td class="average-pace">7:40 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
         <td class="elev-gain">--</td>
-    </tr></tbody>
+    </tr><tr>
+        <td class="rank">15</td>
+        <td class="athlete">
+            <div class="avatar avatar-athlete avatar-sm">
+                <a class="avatar-content" href="/athletes/23067415">
+                    <div class="avatar-img-wrapper avatar-default">
+
+                        <img alt="Anca-Elena Alexandrescu" src="https://lh4.googleusercontent.com/-2mQugRiIXds/AAAAAAAAAAI/AAAAAAAAbz0/yxyCkxbSNuQ/photo.jpg" title="Anca-Elena Alexandrescu">
+                    </div>
+                </a>
+            </div>
+            <a class="athlete-name minimal" href="/athletes/23067415">
+                Anca-Elena Alexandrescu
+            </a>
+        </td>
+        <td class="distance highlighted-column">15.7 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">3</td>
+        <td class="longest-activity">
+            <a class="minimal" href="/activities/2496040202">
+                6.0 <abbr class="unit short" title="kilometers">km</abbr>
+            </a>
+        </td>
+        <td class="average-pace">6:43 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">288 <abbr class="unit short" title="meters">m</abbr></td>
+    </tr><tr>
+        <td class="rank">16</td>
+        <td class="athlete">
+            <div class="avatar avatar-athlete avatar-sm">
+                <a class="avatar-content" href="/athletes/42945930">
+                    <div class="avatar-img-wrapper avatar-default">
+
+                        <img alt="Gavin Donoghue" src="//d3nn82uaxijpm6.cloudfront.net/assets/avatar/athlete/large-e1af16a1979fcd1d65bfb0208e8ed84b6dde3270566e911582f54ef6d9392d59.png" title="Gavin Donoghue">
+                    </div>
+                </a>
+            </div>
+            <a class="athlete-name minimal" href="/athletes/42945930">
+                Gavin Donoghue
+            </a>
+        </td>
+        <td class="distance highlighted-column">15.3 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">3</td>
+        <td class="longest-activity">
+            <a class="minimal" href="/activities/2494851502">
+                5.4 <abbr class="unit short" title="kilometers">km</abbr>
+            </a>
+        </td>
+        <td class="average-pace">4:59 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">102 <abbr class="unit short" title="meters">m</abbr></td>
+    </tr><tr>
+        <td class="rank">17</td>
+        <td class="athlete">
+            <div class="avatar avatar-athlete avatar-sm">
+                <a class="avatar-content" href="/athletes/42912286">
+                    <div class="avatar-img-wrapper avatar-default">
+
+                        <img alt="Stuart Thomson" src="//d3nn82uaxijpm6.cloudfront.net/assets/avatar/athlete/large-e1af16a1979fcd1d65bfb0208e8ed84b6dde3270566e911582f54ef6d9392d59.png" title="Stuart Thomson">
+                    </div>
+                </a>
+            </div>
+            <a class="athlete-name minimal" href="/athletes/42912286">
+                Stuart Thomson
+            </a>
+        </td>
+        <td class="distance highlighted-column">15.0 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">2</td>
+        <td class="longest-activity">
+            <a class="minimal" href="/activities/2507992097">
+                8.1 <abbr class="unit short" title="kilometers">km</abbr>
+            </a>
+        </td>
+        <td class="average-pace">5:04 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">98 <abbr class="unit short" title="meters">m</abbr></td>
+    </tr><tr>
+        <td class="rank">18</td>
+        <td class="athlete">
+            <div class="avatar avatar-athlete avatar-sm">
+                <a class="avatar-content" href="/athletes/39378771">
+                    <div class="avatar-img-wrapper avatar-default">
+
+                        <img alt="Rex Nohay" src="https://dgalywyr863hv.cloudfront.net/pictures/athletes/39378771/12226281/2/large.jpg" title="Rex Nohay">
+                    </div>
+                </a>
+            </div>
+            <a class="athlete-name minimal" href="/athletes/39378771">
+                Rex Nohay
+            </a>
+        </td>
+        <td class="distance highlighted-column">14.5 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">3</td>
+        <td class="longest-activity">
+            <a class="minimal" href="/activities/2494973134">
+                5.4 <abbr class="unit short" title="kilometers">km</abbr>
+            </a>
+        </td>
+        <td class="average-pace">9:32 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">650 <abbr class="unit short" title="meters">m</abbr></td>
+    </tr><tr>
+        <td class="rank">19</td>
+        <td class="athlete">
+            <div class="avatar avatar-athlete avatar-sm">
+                <a class="avatar-content" href="/athletes/29177863">
+                    <div class="avatar-img-wrapper avatar-default">
+
+                        <img alt="Ezani Schultheiss" src="https://lh5.googleusercontent.com/-DBd0i9MQlv8/AAAAAAAAAAI/AAAAAAAAAAA/AKxrwcaXqXRnpmnJkBf06zuIXaO_SOZE5w/mo/photo.jpg" title="Ezani Schultheiss">
+                    </div>
+                </a>
+            </div>
+            <a class="athlete-name minimal" href="/athletes/29177863">
+                Ezani Schultheiss
+            </a>
+        </td>
+        <td class="distance highlighted-column">14.0 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">2</td>
+        <td class="longest-activity">
+            <a class="minimal" href="/activities/2510611705">
+                7.4 <abbr class="unit short" title="kilometers">km</abbr>
+            </a>
+        </td>
+        <td class="average-pace">5:03 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">250 <abbr class="unit short" title="meters">m</abbr></td>
+    </tr><tr>
+        <td class="rank">20</td>
+        <td class="athlete">
+            <div class="avatar avatar-athlete avatar-sm">
+                <a class="avatar-content" href="/athletes/18177642">
+                    <div class="avatar-img-wrapper avatar-default">
+
+                        <img alt="Dennis Piovesana" src="https://dgalywyr863hv.cloudfront.net/pictures/athletes/18177642/5154414/1/large.jpg" title="Dennis Piovesana">
+                    </div>
+                </a>
+            </div>
+            <a class="athlete-name minimal" href="/athletes/18177642">
+                Dennis Piovesana
+            </a>
+        </td>
+        <td class="distance highlighted-column">6.7 <abbr class="unit short" title="kilometers">km</abbr></td>
+        <td class="num-activities">1</td>
+        <td class="longest-activity">
+            <a class="minimal" href="/activities/2496835425">
+                6.7 <abbr class="unit short" title="kilometers">km</abbr>
+            </a>
+        </td>
+        <td class="average-pace">6:04 <abbr class="unit short" title="minutes per kilometer">/km</abbr></td>
+        <td class="elev-gain">31 <abbr class="unit short" title="meters">m</abbr></td>
+    </tr>
+    </tbody>
 </table>
+</div>
