@@ -40,8 +40,10 @@ const runners = {
     18897560: {name: "Artyom Romanov", team: 'zurich'},
     44057878: {name: "Becky Pitts", team: 'london'},
     15297420: {name: "Yevgeniy Ilyin", team: 'zurich'},
-    18177642: {name: "Dennis Piovesana", team: 'lugano'}
+    18177642: {name: "Dennis Piovesana", team: 'lugano'},
+    44193374: {name: "Jam Marce", team: 'manila'}
 };
+
 const teams = {};
 
 const athletesThatHaveRan = [];
