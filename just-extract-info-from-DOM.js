@@ -41,57 +41,50 @@ const runners = {
     44057878: {name: "Becky Pitts", team: 'london'},
     15297420: {name: "Yevgeniy Ilyin", team: 'zurich'},
     18177642: {name: "Dennis Piovesana", team: 'lugano'},
-    44193374: {name: "Jam Marce", team: 'manila'}
+    44193374: {name: "Jam Marce", team: 'manila'},
+    44232903: {name: "Homer Irineo", team: 'manila'}
 };
 
 const teams = {};
-
-const athletesThatHaveRan = [];
-const athletesThatHaveRanByTeam = {edinburgh: 4, zurich: 5, manila: 4, lugano: 6};
-
 const currentDate = new Date();
 const formattedDate = currentDate.getDate() + '.' + currentDate.getMonth() + '.' + currentDate.getFullYear();
-
 const dimensions = ['distance', 'elevation', 'time', 'pace'];
-
-const initialValues = {
-    "manila": {
-        "distance": {"total": 0, "avgByAthlete": 0},
-        "elevation": {"total": 0, "avgByAthlete": 0},
-        "time": {"total": 0, "avgByAthlete": 0},
-        "pace": {"avgByAthlete": 0, "total": 0}
-    },
-    "zurich": {
-        "distance": {"total": 0, "avgByAthlete": 0},
-        "elevation": {"total": 0, "avgByAthlete": 0},
-        "time": {"total": 0, "avgByAthlete": 0},
-        "pace": {"avgByAthlete": 0, "total": 0}
-    },
-    "edinburgh": {
-        "distance": {"total": 0, "avgByAthlete": 0},
-        "elevation": {"total": 0, "avgByAthlete": 0},
-        "time": {"total": 0, "avgByAthlete": 0},
-        "pace": {"avgByAthlete": 0, "total": 0}
-    },
-    "lugano": {
-        "distance": {"total": 0, "avgByAthlete": 0},
-        "elevation": {"total": 0, "avgByAthlete": 0},
-        "time": {"total": 0, "avgByAthlete": 0},
-        "pace": {"avgByAthlete": 0, "total": 0}
-    },
-    "madrid": {
-        "distance": {"total": 0, "avgByAthlete": 0},
-        "elevation": {"total": 0, "avgByAthlete": 0},
-        "time": {"total": 0, "avgByAthlete": 0},
-        "pace": {"avgByAthlete": 0, "total": 0}
-    }
-};
+let totalRunners = 0;
+let runnersThatHaveRanLength = 0;
 
 groupAndAnaliseData(runners);
 
+function runnersThatHaveRan(rows){
+    const athletes = [];
+    for (let i = 0; i < rows.length; i++) {
+        const ath = rows[i].querySelector('.athlete-name.minimal');
+        const id = ath.getAttribute('href').replace('/athletes/', '');
+        if (athletes.indexOf(id) === -1) {
+            athletes.push(id);
+        }
+    }
+
+    const runnersThatHaveRanByTeam = {};
+
+    for (let i = 0; i < athletes.length; i++) {
+        const team = runners[athletes[i]].team;
+        const name = runners[athletes[i]].name;
+
+        if (!runnersThatHaveRanByTeam[team]) {
+            runnersThatHaveRanByTeam[team] = [];
+        }
+
+        runnersThatHaveRanByTeam[team].push(name);
+    }
+
+    return runnersThatHaveRanByTeam;
+}
+
 function groupAndAnaliseData(runners) {
     const athletesRanking = document.querySelectorAll('.leaderboard table tbody tr');
+    const athletesThatHaveRanByTeam = runnersThatHaveRan(athletesRanking);
     const leadersRankingTableByTeam = document.querySelector('.leaders table');
+
     if (!leadersRankingTableByTeam) {
         return;
     }
@@ -124,13 +117,12 @@ function groupAndAnaliseData(runners) {
     const ranking = getRanking();
 
     console.log(JSON.stringify(ranking));
-    generateResults(ranking, leadersRankingTableByTeam, 'total');
+    const totals = generateResults(ranking, leadersRankingTableByTeam, 'total');
     generateResults(ranking, leadersRankingTableByAthlete, 'avgByAthlete');
     generateResults(ranking, leadersRankingTableByAthleteThaRan, 'avgByAthleteThaRan');
 
     function generateTableDataByTeams() {
         const rows = [];
-        let totalAthletes = 0;
         let totalAthletesThatRan = 0;
         for (const runnerId in runners) {
             const team = runners[runnerId].team;
@@ -142,7 +134,7 @@ function groupAndAnaliseData(runners) {
         for (const team in teams) {
             const teamName = createElement('td', {}, team);
             const athletesInTeamLength = teams[team].length;
-            totalAthletes += athletesInTeamLength;
+            totalRunners += athletesInTeamLength;
             teamName.style.fontWeight = 'bold';
             teamName.style.fontVariant = 'small-caps';
             teamName.style.textTransform = 'capitalize';
@@ -152,17 +144,24 @@ function groupAndAnaliseData(runners) {
 
             const list = teams[team].join(', ');
             const athletesNameCell = createElement('td', {}, list);
-            const runnersLength = athletesThatHaveRanByTeam[team] || 0;
+            const runnersLength = (athletesThatHaveRanByTeam[team] && athletesThatHaveRanByTeam[team].length) || 0;
+            const runnersNames = (athletesThatHaveRanByTeam[team] && athletesThatHaveRanByTeam[team].join(', ')) || '';
             const percentage = runnersLength ? (runnersLength * 100 / athletesInTeamLength).toFixed(2) : 0;
-            const athletesThatHaveRan = createElement('td', {'style': 'text-align: center'}, runnersLength + ' (' + percentage + '%)');
+            const runnersThaHaveRanText = runnersLength ? (runnersLength + ' (' + percentage + '%): ' + runnersNames) : runnersLength;
+            const athletesThatHaveRan = createElement('td', {}, runnersThaHaveRanText);
             totalAthletesThatRan += runnersLength;
 
             rows.push(createElement('tr', {}, [teamName, athletesCell, athletesNameCell, athletesThatHaveRan]));
         }
+
+        runnersThatHaveRanLength += totalAthletesThatRan;
+
         const totalsCell = createElement('td', {'style': 'font-weight: bold'}, 'Totals');
-        const athletesTotalsCell = createElement('td', {'style': 'text-align: center'}, totalAthletes);
+        const athletesTotalsCell = createElement('td', {'style': 'text-align: center'}, totalRunners);
         const emtpyCell = createElement('td', {}, '');
-        const athletesTotalsThatRanCell = createElement('td', {'style': 'text-align: center'}, totalAthletesThatRan);
+        const percentage = totalAthletesThatRan ? (totalAthletesThatRan * 100 / totalRunners).toFixed(2) : 0;
+        const runnersThaHaveRanText = totalAthletesThatRan ? (totalAthletesThatRan + ' (' + percentage + '%)') : totalAthletesThatRan;
+        const athletesTotalsThatRanCell = createElement('td', {}, runnersThaHaveRanText);
         rows.push(createElement('tr', {}, [totalsCell, athletesTotalsCell, emtpyCell, athletesTotalsThatRanCell]));
 
         const th1 = createElement('th', {}, 'team');
@@ -170,11 +169,11 @@ function groupAndAnaliseData(runners) {
         const th3 = createElement('th', {'style': 'white-space: nowrap'}, 'have ran');
         const thead = createElement('thead', {}, [th1, th2, th3]);
         const tbody = createElement('tbody', {}, rows);
-        return createElement('table', {'style': 'width: 60%; margin: auto'}, [thead, tbody]);
+        return createElement('table', {'style': 'width: 90%; margin: auto'}, [thead, tbody]);
     }
 
     function generateResults(ranking, table, pattern = 'total') {
-        const totals = {distance: 0, time: 0, elevation: 0, pace: 0};
+        const totalsByRunner = {distance: 0, time: 0, elevation: 0, pace: 0};
 
         dimensions.forEach((dimension) => {
             table.querySelector('thead tr').appendChild(createElement('th', {}, dimension));
@@ -206,13 +205,24 @@ function groupAndAnaliseData(runners) {
                 const team = item.team;
                 let value = item.value;
 
-                totals[dimension] += value;
+                totalsByRunner[dimension] += value;
 
                 row.appendChild(createCellResult(team, adaptValueToShow(dimension, value)));
             });
         });
 
-        addTotalsRow(table, totals);
+
+        if(pattern === 'total'){
+            addTotalsRow(table, totalsByRunner);
+            return totalsByRunner;
+        }else{
+            const updatedTotalsAverages = Object.assign({}, totals);
+            const factor = (pattern === 'avgByAthlete') ? totalRunners : runnersThatHaveRanLength;
+            for (const dimension in updatedTotalsAverages) {
+                updatedTotalsAverages[dimension] = updatedTotalsAverages[dimension] / factor;
+            }
+            addTotalsRow(table, updatedTotalsAverages);
+        }
 
         function addTotalsRow(table, totals) {
             const totalsHeaderCell = createElement('td', {'style': 'font-weight: bold'}, 'Totals');
@@ -226,7 +236,6 @@ function groupAndAnaliseData(runners) {
             });
             table.querySelector('tbody').appendChild(totalsRow);
         }
-
 
         function adaptValueToShow(dimension, value) {
             let valueToShow;
@@ -315,7 +324,7 @@ function groupAndAnaliseData(runners) {
 
         for (const team in ranking) {
             const teamLength = teams[team].length;
-            const thatRan = athletesThatHaveRanByTeam[team];
+            const thatRan = athletesThatHaveRanByTeam[team] && athletesThatHaveRanByTeam[team].length;
             ranking[team].distance.avgByAthlete = (ranking[team].distance.total / teamLength);
             ranking[team].distance.avgByAthleteThaRan = (ranking[team].distance.total / thatRan);
             ranking[team].elevation.avgByAthlete = ranking[team].elevation.total / teamLength;

@@ -41,7 +41,8 @@ const runners = {
     44057878: {name: "Becky Pitts", team: 'london'},
     15297420: {name: "Yevgeniy Ilyin", team: 'zurich'},
     18177642: {name: "Dennis Piovesana", team: 'lugano'},
-    44193374: {name: "Jam Marce", team: 'manila'}
+    44193374: {name: "Jam Marce", team: 'manila'},
+    44232903: {name: "Homer Irineo", team: 'manila'}
 };
 
 const createEventButton = document.querySelector('#club-event-js');
