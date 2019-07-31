@@ -47,6 +47,7 @@ const runners = {
     44602808: {name: "Jayy Alop", team: 'manila'},
     44661594: {name: "timothy lee", team: 'manila'},
     23851097: {name: "Lucas Main", team: 'london'},
+    44854315: {name: "Vaclav Skarka", team: 'zurich'},
 };
 
 const createEventButton = document.querySelector('#club-event-js');
