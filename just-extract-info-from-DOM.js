@@ -60,39 +60,58 @@ let runnersThatHaveRanLength = 0;
 groupAndAnaliseData(runners);
 
 function runnersThatHaveRan(rows){
-    const athletes = [];
+    const runnersThatRanObject = {};
     for (let i = 0; i < rows.length; i++) {
-        const ath = rows[i].querySelector('.athlete-name.minimal');
-        const id = ath.getAttribute('href').replace('/athletes/', '');
-        if (athletes.indexOf(id) === -1) {
-            athletes.push(id);
+        const {runnerId, name, runs, elevation, team, distance, time} = getParametersFromRow(rows[i]);
+        if (!runnersThatRanObject[runnerId]) {
+            const runner = {distance: 0, elevation: 0, time: 0, runs: 0};
+            runnersThatRanObject[runnerId] = runner;
         }
+        runnersThatRanObject[runnerId].runnerId = runnerId;
+        runnersThatRanObject[runnerId].name = name;
+        runnersThatRanObject[runnerId].team = team;
+        runnersThatRanObject[runnerId].distance += distance;
+        runnersThatRanObject[runnerId].elevation += elevation;
+        runnersThatRanObject[runnerId].time += time;
+        runnersThatRanObject[runnerId].runs += runs;
     }
 
-    const runnersThatHaveRanByTeam = {};
-
-    for (let i = 0; i < athletes.length; i++) {
-        const team = runners[athletes[i]].team;
-        const name = runners[athletes[i]].name;
-
-        if (!runnersThatHaveRanByTeam[team]) {
-            runnersThatHaveRanByTeam[team] = [];
-        }
-
-        runnersThatHaveRanByTeam[team].push(name);
+    const runnersThatRan = [];
+    for (const runnerId in runnersThatRanObject) {
+        runnersThatRan.push(runnersThatRanObject[runnerId]);
     }
 
-    return runnersThatHaveRanByTeam;
+    runnersThatRan.sort(sortDesc('distance', 'elevation'));
+    console.log(runnersThatRan);
+
+    return runnersThatRan;
+}
+
+function runnersGroupedByTeam(runners){
+    const groupedRunners = {};
+    for (const runnerId in runners) {
+        const team = runners[runnerId].team;
+        const name = runners[runnerId].name;
+        if (!groupedRunners[team]) {
+            groupedRunners[team] = [];
+        }
+
+        groupedRunners[team].push(name);
+    }
+
+    return groupedRunners;
 }
 
 function groupAndAnaliseData(runners) {
-    const athletesRanking = document.querySelectorAll('.leaderboard table tbody tr');
-    const athletesThatHaveRanByTeam = runnersThatHaveRan(athletesRanking);
     const leadersRankingTableByTeam = document.querySelector('.leaders table');
-
     if (!leadersRankingTableByTeam) {
         return;
     }
+
+    const runnersRanking = document.querySelectorAll('.leaderboard table tbody tr');
+    const runnersThatRan = runnersThatHaveRan(runnersRanking);
+    const runnersThatHaveRanByTeam = runnersGroupedByTeam(runnersThatRan);
+
     const tableParent = leadersRankingTableByTeam.parentNode;
     const leadersRankingHeaderRow = leadersRankingTableByTeam.querySelector('thead tr');
     while (leadersRankingHeaderRow.children.length) {
@@ -121,7 +140,6 @@ function groupAndAnaliseData(runners) {
     const resultsByAthlete = {};
     const ranking = getRanking();
 
-    console.log(JSON.stringify(ranking));
     const totals = generateResults(ranking, leadersRankingTableByTeam, 'total');
     generateResults(ranking, leadersRankingTableByAthlete, 'avgByAthlete');
     generateResults(ranking, leadersRankingTableByAthleteThaRan, 'avgByAthleteThaRan');
@@ -149,8 +167,8 @@ function groupAndAnaliseData(runners) {
 
             const list = teams[team].join(', ');
             const athletesNameCell = createElement('td', {}, list);
-            const runnersLength = (athletesThatHaveRanByTeam[team] && athletesThatHaveRanByTeam[team].length) || 0;
-            const runnersNames = (athletesThatHaveRanByTeam[team] && athletesThatHaveRanByTeam[team].join(', ')) || '';
+            const runnersLength = (runnersThatHaveRanByTeam[team] && runnersThatHaveRanByTeam[team].length) || 0;
+            const runnersNames = (runnersThatHaveRanByTeam[team] && runnersThatHaveRanByTeam[team].join(', ')) || '';
             const percentage = runnersLength ? (runnersLength * 100 / athletesInTeamLength).toFixed(2) : 0;
             const runnersThaHaveRanText = runnersLength ? (runnersLength + ' (' + percentage + '%): ' + runnersNames) : runnersLength;
             const athletesThatHaveRan = createElement('td', {}, runnersThaHaveRanText);
@@ -191,9 +209,9 @@ function groupAndAnaliseData(runners) {
             }
 
             if (dimension != 'pace') {
-                orderedRanking.sort(sortDesc);
+                orderedRanking.sort(sortDesc('value'));
             } else {
-                orderedRanking.sort(sortAsc);
+                orderedRanking.sort(sortAsc('value'));
                 if (orderedRanking[0].value === 0) {
                     orderedRanking.push(orderedRanking[0]);
                     orderedRanking.splice(0, 1);
@@ -267,24 +285,6 @@ function groupAndAnaliseData(runners) {
             return valueToShow;
         }
 
-        function sortDesc(a, b) {
-            if (a.value > b.value) {
-                return -1;
-            } else if (a.value < b.value) {
-                return 1;
-            }
-            return 0;
-        }
-
-        function sortAsc(a, b) {
-            if (a.value > b.value) {
-                return 1;
-            } else if (a.value < b.value) {
-                return -1;
-            }
-            return 0;
-        }
-
         function getRankingByDimension(ranking, dimension, pattern) {
             const rankingByDimension = {};
             for (const team in ranking) {
@@ -298,38 +298,23 @@ function groupAndAnaliseData(runners) {
     }
 
     function getRanking() {
-//        const ranking = Object.assign({}, initial.first);
-//         const ranking = Object.assign({}, initialValues);
         const ranking = {};
-
-        athletesRanking.forEach((item) => {
-            const cells = item.querySelectorAll('td');
-            if (!cells[1]) {
+        runnersRanking.forEach((item) => {
+            if (!item.querySelectorAll('td').length) {
                 return;
             }
-            const runnerId = cells[1].querySelector('a').getAttribute('href').replace('/athletes/', '');
-            const team = runners[runnerId].team;
-            const realDistance = parseFloat(cells[2].textContent.trim().replace(',', '.')) || 0; // in km
-            const distance = realDistance * 1000; // in meters
-            const runs = parseFloat(cells[3].textContent.trim().replace(',', '.')) || 0;
-            const longest = parseFloat(cells[4].textContent.trim().replace(',', '.')) || 0;
 
-            const avg = cells[5].textContent.replace('/km', '').trim();
-            const avgPace = timeConverterToSeconds(avg); // in seconds
-            const time = realDistance * avgPace;
-
-            const elevation = parseFloat(cells[6].textContent.trim().replace('.', '')) || 0;
+            const {runnerId, runs, longest, elevation, team, distance, avgPace, time} = getParametersFromRow(item);
 
             resultsByAthlete[runnerId] = {distance, runs, longest, avgPace, elevation, time};
 
             addToTeam(team, {distance, elevation, time});
         });
 
-        console.log(teams)
-
+        console.log(teams);
         for (const team in ranking) {
             const teamLength = teams[team].length;
-            const thatRan = athletesThatHaveRanByTeam[team] && athletesThatHaveRanByTeam[team].length;
+            const thatRan = runnersThatHaveRanByTeam[team] && runnersThatHaveRanByTeam[team].length;
             ranking[team].distance.avgByAthlete = (ranking[team].distance.total / teamLength);
             ranking[team].distance.avgByAthleteThaRan = (ranking[team].distance.total / thatRan);
             ranking[team].elevation.avgByAthlete = ranking[team].elevation.total / teamLength;
@@ -366,33 +351,6 @@ function groupAndAnaliseData(runners) {
         }
     }
 
-    function secondsTimeConvert(secondsTotal, toMinutes = false) {
-        const hours = secondsTotal / 3600;
-        const roundedHours = Math.floor(hours);
-        const minutes = (hours - roundedHours) * 60;
-        const roundedMinutes = Math.floor(minutes);
-        const seconds = (minutes - roundedMinutes) * 60;
-        const roundedSeconds = Math.round(seconds);
-
-        if (!toMinutes) {
-            return roundedHours + ':' + (roundedMinutes < 10 ? '0' + roundedMinutes : roundedMinutes) + ':' + (roundedSeconds < 10 ? '0' + roundedSeconds : roundedSeconds);
-        } else {
-            return roundedMinutes + ':' + (roundedSeconds < 10 ? '0' + roundedSeconds : roundedSeconds);
-        }
-    }
-
-    function timeConverterToSeconds(time) {
-        const splittedTime = time.split(':');
-        const partsLength = splittedTime.length;
-        let timeInSeconds = 0;
-
-        for (let i = partsLength - 1; i >= 0; i--) {
-            timeInSeconds += parseInt(splittedTime[i]) * Math.pow(60, partsLength - i - 1);
-        }
-
-        return timeInSeconds;
-    }
-
     function createAchievementCell(achievement) {
         const achievementDiv = createElement('div', {'class': achievement});
 
@@ -409,6 +367,84 @@ function groupAndAnaliseData(runners) {
         dimension.style.marginTop = '3px';
 
         return createElement('td', {}, [teamName, dimension]);
+    }
+}
+
+function getParametersFromRow(row){
+    const runnerId = row.querySelector('.athlete a').getAttribute('href').replace('/athletes/', '');
+    const realDistance = parseFloat(row.querySelector('.distance').textContent.trim().replace(',', '.')) || 0; // in km
+    const runs = parseFloat(row.querySelector('.num-activities').textContent.trim().replace(',', '.')) || 0;
+    const longest = parseFloat(row.querySelector('.longest-activity').textContent.trim().replace(',', '.')) || 0;
+    const avg = row.querySelector('.average-pace').textContent.replace('/km', '').trim();
+    const elevation = parseFloat(row.querySelector('.elev-gain').textContent.trim().replace('.', '')) || 0;
+
+    const team = runners[runnerId].team;
+    const name = runners[runnerId].name;
+    const distance = realDistance * 1000; // in meters
+    const avgPace = timeConverterToSeconds(avg); // in seconds
+    const time = realDistance * avgPace;
+
+    return {runnerId, name, runs, longest, avg, elevation, team, distance, avgPace, time};
+}
+
+function timeConverterToSeconds(time) {
+    const splittedTime = time.split(':');
+    const partsLength = splittedTime.length;
+    let timeInSeconds = 0;
+
+    for (let i = partsLength - 1; i >= 0; i--) {
+        timeInSeconds += parseInt(splittedTime[i]) * Math.pow(60, partsLength - i - 1);
+    }
+
+    return timeInSeconds;
+}
+
+function secondsTimeConvert(secondsTotal, toMinutes = false) {
+    const hours = secondsTotal / 3600;
+    const roundedHours = Math.floor(hours);
+    const minutes = (hours - roundedHours) * 60;
+    const roundedMinutes = Math.floor(minutes);
+    const seconds = (minutes - roundedMinutes) * 60;
+    const roundedSeconds = Math.round(seconds);
+
+    if (!toMinutes) {
+        return roundedHours + ':' + (roundedMinutes < 10 ? '0' + roundedMinutes : roundedMinutes) + ':' + (roundedSeconds < 10 ? '0' + roundedSeconds : roundedSeconds);
+    } else {
+        return roundedMinutes + ':' + (roundedSeconds < 10 ? '0' + roundedSeconds : roundedSeconds);
+    }
+}
+
+function sortDesc(parameterA, parameterB = undefined) {
+    return (a, b) => {
+        if (a[parameterA] >  b[parameterA]) {
+            return -1;
+        } else if (a[parameterA] < b[parameterA]) {
+            return 1;
+        } else if(parameterB){
+            if (a[parameterB] >  b[parameterB]) {
+                return -1;
+            } else if (a[parameterB] < b[parameterB]) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+}
+
+function sortAsc(parameter, parameterB = undefined) {
+    return (a, b) => {
+        if (a[parameter] > b[parameter]) {
+            return 1;
+        } else if (a[parameter] < b[parameter]) {
+            return -1;
+        } else if(parameterB){
+            if (a[parameter] > b[parameter]) {
+                return 1;
+            } else if (a[parameter] < b[parameter]) {
+                return -1;
+            }
+        }
+        return 0;
     }
 }
 
