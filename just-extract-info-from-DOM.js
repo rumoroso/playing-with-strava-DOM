@@ -47,7 +47,8 @@ const runners = {
     44602808: {name: "Jayy Alop", team: 'manila'},
     44661594: {name: "timothy lee", team: 'manila'},
     23851097: {name: "Lucas Main", team: 'london'},
-    44854315: {name: "Vaclav Skarka", team: 'zurich'}
+    44854315: {name: "Vaclav Skarka", team: 'zurich'},
+    44430664: {name: "Eiman Mission", team: 'manila'},
 };
 
 const teams = {};
