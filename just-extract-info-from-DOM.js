@@ -1,54 +1,69 @@
 const runners = {
-    29041600: {name: "Jorge Rumoroso", team: 'zurich'},
-    23067415: {name: "Anca-Elena Alexandrescu", team: 'zurich'},
-    6228065: {name: "Andrei C", team: 'zurich'},
-    15282580: {name: "Andres Sanchez", team: 'zurich'},
-    26022333: {name: "G L Lorenz", team: 'zurich'},
-    5257885: {name: "Nicola Terrenghi", team: 'zurich'},
-    20385538: {name: "Stefano Pongelli", team: 'zurich'},
-    23837170: {name: "Theodor Radu", team: 'zurich'},
-    29177863: {name: "Ezani Schultheiss", team: 'zurich'},
-    23870845: {name: "Marc Bodenmüller", team: 'zurich'},
-    43480837: {name: "Nick Krommydas", team: 'zurich'},
-    12048356: {name: "Paul Tuxford", team: 'zurich'},
-    18519747: {name: "Bryan Flores", team: 'manila'},
-    16500041: {name: "Jerome Sevilla", team: 'manila'},
-    42704472: {name: "PJ de Leon", team: 'manila'},
-    41904167: {name: "Kevin Francisco", team: 'manila'},
-    43010190: {name: "Renz Estacio", team: 'manila'},
-    42168384: {name: "Andre Gabo", team: 'manila'},
-    43058513: {name: "Kat Samboa", team: 'manila'},
-    41572080: {name: "Kristian Villabroza", team: 'manila'},
-    43451502: {name: "Ann Margaret Silva", team: 'manila'},
-    39378771: {name: "Rex Nohay", team: 'manila'},
-    43451716: {name: "Michael Christian Torres", team: 'manila'},
-    16031782: {name: "John Clark", team: 'edinburgh'},
-    31565097: {name: "Stuart Dodds", team: 'edinburgh'},
-    42912286: {name: "Stuart Thomson", team: 'edinburgh'},
-    42945930: {name: "Gavin Donoghue", team: 'edinburgh'},
-    42949260: {name: "Pirmin Zenklusen", team: 'edinburgh'},
-    14570654: {name: "nathan quadrio", team: 'lugano'},
-    25044835: {name: "Emanuele Della Valle", team: 'lugano'},
-    5690359: {name: "Michele  Sasso", team: 'lugano'},
-    30041945: {name: "Martina Dotta", team: 'lugano'},
-    26765072: {name: "Daniele Proserpio", team: 'lugano'},
-    13629176: {name: "Adamo Maddalena", team: 'lugano'},
-    3491386: {name: "Mauro MDC", team: 'madrid'},
-    5027913: {name: "Riccardo Burgaletta", team: 'lugano'},
-    43940121: {name: "Alessandro Bertocchi", team: 'lugano'},
-    43945001: {name: "Giuliano Paris", team: 'lugano'},
-    18897560: {name: "Artyom Romanov", team: 'zurich'},
-    44057878: {name: "Becky Pitts", team: 'london'},
-    15297420: {name: "Yevgeniy Ilyin", team: 'zurich'},
-    18177642: {name: "Dennis Piovesana", team: 'lugano'},
-    44193374: {name: "Jam Marce", team: 'manila'},
-    44232903: {name: "Homer Irineo", team: 'manila'},
-    44600322: {name: "Nikki Aquino", team: 'manila'},
-    44602808: {name: "Jayy Alop", team: 'manila'},
-    44661594: {name: "timothy lee", team: 'manila'},
-    23851097: {name: "Lucas Main", team: 'london'},
-    44854315: {name: "Vaclav Skarka", team: 'zurich'},
-    44430664: {name: "Eiman Mission", team: 'manila'},
+    29041600: {name: 'Jorge Rumoroso', team: 'zurich'},
+    23067415: {name: 'Anca-Elena Alexandrescu', team: 'zurich'},
+    6228065: {name: 'Andrei C', team: 'zurich'},
+    15282580: {name: 'Andres Sanchez', team: 'zurich'},
+    26022333: {name: 'G L Lorenz', team: 'zurich'},
+    5257885: {name: 'Nicola Terrenghi', team: 'zurich'},
+    20385538: {name: 'Stefano Pongelli', team: 'zurich'},
+    23837170: {name: 'Theodor Radu', team: 'zurich'},
+    29177863: {name: 'Ezani Schultheiss', team: 'zurich'},
+    23870845: {name: 'Marc Bodenmüller', team: 'zurich'},
+    12048356: {name: 'Paul Tuxford', team: 'zurich'},
+    18897560: {name: 'Artyom Romanov', team: 'zurich'},
+    44854315: {name: 'Vaclav Skarka', team: 'zurich'},
+    45584106: {name: 'Guy Emry', team: 'zurich'},
+    34873377: {name: 'Rebecca Michel', team: 'zurich'},
+    15297420: {name: 'Yevgeniy Ilyin', team: 'zurich'},
+    18519747: {name: 'Bryan Flores', team: 'manila'},
+    16500041: {name: 'Jerome Sevilla', team: 'manila'},
+    42704472: {name: 'PJ de Leon', team: 'manila'},
+    41904167: {name: 'Kevin Francisco', team: 'manila'},
+    43010190: {name: 'Renz Estacio', team: 'manila'},
+    42168384: {name: 'Andre Gabo', team: 'manila'},
+    43058513: {name: 'Kat Samboa', team: 'manila'},
+    41572080: {name: 'Kristian Villabroza', team: 'manila'},
+    43451502: {name: 'Ann Margaret Silva', team: 'manila'},
+    39378771: {name: 'Rex Nohay', team: 'manila'},
+    43451716: {name: 'Michael Christian Torres', team: 'manila'},
+    44193374: {name: 'Jam Marce', team: 'manila'},
+    44232903: {name: 'Homer Irineo', team: 'manila'},
+    44600322: {name: 'Nikki Aquino', team: 'manila'},
+    44602808: {name: 'Jayy Alop', team: 'manila'},
+    44661594: {name: 'timothy lee', team: 'manila'},
+    44430664: {name: 'Eiman Mission', team: 'manila'},
+    44232405: {name: 'Metch Vince Cruz', team: 'manila'},
+    45655039: {name: 'Engel Alfaro', team: 'manila'},
+    46343095: {name: 'Syd Evangelista', team: 'manila'},
+    46535931: {name: 'Kenneth Daniel', team: 'manila'},
+    43058566: {name: 'Rose Ann Apostol', team: 'manila'},
+    46717966: {name: 'Riselle Denisse Domingo', team: 'manila'},
+    3491386: {name: 'Mauro MDC', team: 'madrid'},
+    14570654: {name: 'nathan quadrio', team: 'lugano'},
+    25044835: {name: 'Emanuele Della Valle', team: 'lugano'},
+    5690359: {name: 'Michele  Sasso', team: 'lugano'},
+    30041945: {name: 'Martina Dotta', team: 'lugano'},
+    26765072: {name: 'Daniele Proserpio', team: 'lugano'},
+    13629176: {name: 'Adamo Maddalena', team: 'lugano'},
+    5027913: {name: 'Riccardo Burgaletta', team: 'lugano'},
+    43940121: {name: 'Alessandro Bertocchi', team: 'lugano'},
+    43945001: {name: 'Giuliano Paris', team: 'lugano'},
+    45579552: {name: 'Luca Pavin', team: 'lugano'},
+    45946021: {name: 'Matteo Martinetti', team: 'lugano'},
+    18177642: {name: 'Dennis Piovesana', team: 'lugano'},
+    46413641: {name: 'Domenico Marzolla', team: 'lugano'},
+    46612170: {name: 'Andrea Scanzio', team: 'lugano'},
+    47102771: {name: 'Isabella Ronzoni Marescalchi', team: 'lugano'},
+    44057878: {name: 'Becky Pitts', team: 'london'},
+    23851097: {name: 'Lucas Main', team: 'london'},
+    576337: {name: 'd h', team: 'edinburgh'},
+    16031782: {name: 'John Clark', team: 'edinburgh'},
+    31565097: {name: 'Stuart Dodds', team: 'edinburgh'},
+    42912286: {name: 'Stuart Thomson', team: 'edinburgh'},
+    42945930: {name: 'Gavin Donoghue', team: 'edinburgh'},
+    42949260: {name: 'Pirmin Zenklusen', team: 'edinburgh'},
+    8620322: {name: 'Iain Ronald', team: 'edinburgh'},
+    19160860: {name: 'Cameron Doyle', team: 'edinburgh'}
 };
 
 const teams = {};
@@ -65,8 +80,7 @@ function runnersThatHaveRan(rows){
     for (let i = 0; i < rows.length; i++) {
         const {runnerId, name, runs, elevation, team, distance, time} = getParametersFromRow(rows[i]);
         if (!runnersThatRanObject[runnerId]) {
-            const runner = {distance: 0, elevation: 0, time: 0, runs: 0};
-            runnersThatRanObject[runnerId] = runner;
+            runnersThatRanObject[runnerId] = {distance: 0, elevation: 0, time: 0, runs: 0};
         }
         runnersThatRanObject[runnerId].runnerId = runnerId;
         runnersThatRanObject[runnerId].name = name;
@@ -209,7 +223,7 @@ function groupAndAnaliseData(runners) {
                 orderedRanking.push({team, value});
             }
 
-            if (dimension != 'pace') {
+            if (dimension !== 'pace') {
                 orderedRanking.sort(sortDesc('value'));
             } else {
                 orderedRanking.sort(sortAsc('value'));
@@ -316,16 +330,17 @@ function groupAndAnaliseData(runners) {
         for (const team in ranking) {
             const teamLength = teams[team].length;
             const thatRan = runnersThatHaveRanByTeam[team] && runnersThatHaveRanByTeam[team].length;
-            ranking[team].distance.avgByAthlete = (ranking[team].distance.total / teamLength);
-            ranking[team].distance.avgByAthleteThaRan = (ranking[team].distance.total / thatRan);
-            ranking[team].elevation.avgByAthlete = ranking[team].elevation.total / teamLength;
-            ranking[team].elevation.avgByAthleteThaRan = (ranking[team].elevation.total / thatRan);
-            ranking[team].time.avgByAthlete = ranking[team].time.total / teamLength;
-            ranking[team].time.avgByAthleteThaRan = (ranking[team].time.total / thatRan);
-            ranking[team].pace = {};
-            ranking[team].pace.avgByAthlete = ranking[team].time.avgByAthlete ? (ranking[team].time.avgByAthlete / ranking[team].distance.avgByAthlete) : 0;
-            ranking[team].pace.avgByAthleteThaRan = ranking[team].time.avgByAthleteThaRan ? (ranking[team].time.avgByAthleteThaRan / ranking[team].distance.avgByAthleteThaRan) : 0;
-            ranking[team].pace.total = ranking[team].time.total ? (ranking[team].time.total / ranking[team].distance.total) : 0;
+            const selectedTeam = ranking[team];
+            selectedTeam.distance.avgByAthlete = (selectedTeam.distance.total / teamLength);
+            selectedTeam.distance.avgByAthleteThaRan = (selectedTeam.distance.total / thatRan);
+            selectedTeam.elevation.avgByAthlete = selectedTeam.elevation.total / teamLength;
+            selectedTeam.elevation.avgByAthleteThaRan = (selectedTeam.elevation.total / thatRan);
+            selectedTeam.time.avgByAthlete = selectedTeam.time.total / teamLength;
+            selectedTeam.time.avgByAthleteThaRan = (selectedTeam.time.total / thatRan);
+            selectedTeam.pace = {};
+            selectedTeam.pace.avgByAthlete = selectedTeam.time.avgByAthlete ? (selectedTeam.time.avgByAthlete / selectedTeam.distance.avgByAthlete) : 0;
+            selectedTeam.pace.avgByAthleteThaRan = selectedTeam.time.avgByAthleteThaRan ? (selectedTeam.time.avgByAthleteThaRan / selectedTeam.distance.avgByAthleteThaRan) : 0;
+            selectedTeam.pace.total = selectedTeam.time.total ? (selectedTeam.time.total / selectedTeam.distance.total) : 0;
         }
 
         for (const team in ranking) {
