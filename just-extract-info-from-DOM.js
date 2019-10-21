@@ -54,6 +54,8 @@ const runners = {
     46413641: {name: 'Domenico Marzolla', team: 'lugano'},
     46612170: {name: 'Andrea Scanzio', team: 'lugano'},
     47102771: {name: 'Isabella Ronzoni Marescalchi', team: 'lugano'},
+    29710337: {name: 'Alfietto Marzullo', team: 'lugano'},
+    47486834: {name: 'Silvia Rovati', team: 'lugano'},
     44057878: {name: 'Becky Pitts', team: 'london'},
     23851097: {name: 'Lucas Main', team: 'london'},
     576337: {name: 'd h', team: 'edinburgh'},
